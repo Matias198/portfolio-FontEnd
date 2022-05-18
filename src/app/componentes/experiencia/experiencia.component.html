@@ -1,0 +1,54 @@
+<!--#EXPERIENCIA:-->
+<div class="card mat-card">
+    <div>
+        <div class="card-titles">
+            <h2>Experiencia</h2>
+            <div id="btn-add"><a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a></div>
+        </div>
+        <!---->
+        <div class="card-containers" *ngFor="let experience of experienceList">
+            <div class="cont cont-img">
+                <!--IMAGEN-->
+                <img class="img-exp" src="{{experience.img}}">
+            </div>
+            <div class="cont cont-text">
+                <!--TEXTO-->
+                <h2 class="h2-title">{{experience.position}}</h2>
+                <p class="p-title">{{experience.company}} - {{experience.mode}}</p>
+                <p class="p-anio">{{experience.start}} - {{experience.end}} - {{experience.timeElasped}}</p>
+                <p class="p-lugar">{{experience.place}}</p>
+            </div>
+            <div class="cont cont-buttons">
+                <!--BOTONES-->
+                <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>
+                <div id="btn-del"><a href="#" class="btn-right"><i class="bi bi-trash"></i></a></div>
+            </div>
+        </div>
+    </div>
+
+    <!--#EDUCACION:-->
+    <div>
+        <div class="card-titles">
+            <h2>Educacion</h2>
+            <div id="btn-add"><a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a></div>
+        </div>
+        <!---->
+        <div class="card-containers"  *ngFor="let education of educationList">
+            <div class="cont cont-img">
+                <!--IMAGEN-->
+                <img class="img-exp" src="{{education.img}}">
+            </div>
+            <div class="cont cont-text">
+                <!--TEXTO-->
+                <h2 class="h2-title">{{education.school}}</h2>
+                <p class="p-title">{{education.title}}, {{education.career}}, {{education.score}}</p>
+                <p class="p-subtitle">{{education.start}} - {{education.end}}</p>
+            </div>
+            <div class="cont cont-buttons">
+                <!--BOTONES-->
+                <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>
+                <div id="btn-del"><a href="#" class="btn-right"><i class="bi bi-trash"></i></a></div>
+            </div>
+        </div>
+    </div>
+</div>

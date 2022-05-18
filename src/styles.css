@@ -1,0 +1,296 @@
+/* You can add global styles to this file, and also import other style files */
+.mat-card {
+  border-radius: 40px !important;
+  margin: 10px 10px;
+  padding: 20px;
+  border-color: lightgrey !important;
+}
+
+
+.mat-card#first-card {
+  padding: 0px;
+}
+
+div#profile-background img {
+  width: 100%;
+  border-radius: 32px 32px 0 0;
+}
+
+.profile-image {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin-top: -110px;
+  z-index: 1;
+}
+
+div#info-actions {
+  display: flex;
+}
+
+div#info-data ul#info-details {
+  width: 232px;
+  list-style: none;
+  flex-shrink: 0;
+}
+
+div#info-actions .btn {
+  margin: 5px;
+}
+
+div#info-data h1 {
+  font-size: 30px;
+}
+
+.img-li {
+  height: 30px;
+  width: 30px;
+  margin-top: -5px;
+  vertical-align: middle;
+}
+
+ul#info-details a {
+  text-decoration: none;
+}
+
+ul#info-details {
+  position: absolute;
+}
+
+ul#info-details h2,
+img {
+  display: inline-block;
+}
+
+ul#info-details h2 {
+  color: black;
+  font-size: 15px;
+  align-items: center;
+}
+
+div#div-data,
+div#info-academyc {
+  display: inline-block;
+}
+
+div#info-academyc {
+  float: right;
+  margin-right: 15%;
+}
+
+.info img,
+div#btn-edit {
+  display: inline-block;
+}
+
+.card-titles div#btn-edit,
+h2 {
+  display: inline-block;
+}
+
+.card-titles div#btn-edit {
+  float: right;
+}
+
+.card-titles div#btn-add {
+  display: inline-block;
+}
+
+.card-titles div#btn-add {
+  float: right;
+}
+
+div#card-containers div {
+  display: inline-block;
+}
+
+.img-exp {
+  width: 100px;
+  height: 100px;
+}
+
+.cont {
+  display: inline-block;
+}
+
+.cont-img {
+  float: left;
+  margin-right: 30px;
+}
+
+.h2-title {
+  margin-bottom: 10%;
+}
+
+.p-title {
+  font-size: 20px;
+}
+
+.p-title {
+  font-size: 12px;
+  line-height: 5px;
+}
+
+.p-title-center {
+  font-size: 12px;
+  line-height: 5px;
+  text-align: center;
+  display: grid;
+}
+
+.btn-edit-ajust {
+  display: grid;
+  justify-content: start;
+}
+
+.p-title-proyect {
+  font-size: 20px;
+  color: rgb(0, 153, 255);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.p-body-proyect {
+  margin-top: 1%;
+  font-size: 12px;
+  color: grey;
+}
+
+.div-test {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.p-lugar,
+.p-anio {
+  color: grey;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 5px;
+}
+
+.cont-buttons {
+  float: right;
+}
+
+.cont-buttons div#btn-del,
+div#btn-edit {
+  display: inline-block;
+  padding: 2px;
+}
+
+.card-titles {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+	/* Coded with love by Mutiullah Samim */
+  body,
+  html {
+      margin: 0;
+      padding: 50px;
+      height: 100%;
+      background: #60a3bc !important;
+  }
+  .user_card {
+      height: 400px;
+      width: 390px;
+      margin-top: auto;
+      margin-bottom: auto;
+      background: #f39c12;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      padding: 10px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      border-radius: 5px;
+
+  }
+  .brand_logo_container {
+      position: absolute;
+      height: 170px;
+      width: 170px;
+      top: -75px;
+      border-radius: 50%;
+      background: #60a3bc;
+      padding: 10px;
+      text-align: center;
+  }
+  .brand_logo {
+      height: 150px;
+      width: 150px;
+      border-radius: 50%;
+      border: 2px solid white;
+  }
+  .form_container {
+      margin-top: 100px;
+  }
+  .login_btn {
+      width: 100%;
+      background: #c0392b !important;
+      color: white !important;
+  }
+  .login_btn:focus {
+      box-shadow: none !important;
+      outline: 0px !important;
+  }
+  .login_container {
+      padding: 0 2rem;
+  }
+  .input-group-text {
+      background: #c0392b !important;
+      color: white !important;
+      border: 0 !important;
+      border-radius: 0.25rem 0 0 0.25rem !important;
+  }
+  .input_user,
+  .input_pass:focus {
+      box-shadow: none !important;
+      outline: 0px !important;
+  }
+  .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+      background-color: #c0392b !important;
+  }
+
+  .container_card {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #f39c12;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+
+}
+
+
+  .divider-text {
+    position: relative;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.divider-text span {
+    padding: 7px;
+    font-size: 12px;
+    position: relative;   
+    z-index: 2;
+}
+.divider-text:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    top: 55%;
+    left: 0;
+    z-index: 1;
+}

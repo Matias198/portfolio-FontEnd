@@ -1,0 +1,23 @@
+<!--#PROYECTOS:-->
+<div class="card mat-card">
+    <div class="card-titles">
+        <h2>Proyectos</h2>
+        <div id="btn-add"><a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a></div>
+    </div>
+    <!--ELEMENTO 1-->
+    <div class="container" style="margin-bottom: 2%;" *ngFor="let proyecto of proyectList">
+        <div class="row">
+            <div class="col-11 item-center">
+                <a class="p-title-proyect" href="#">{{proyecto.name}}</a>
+                <p class="p-body-proyect">{{proyecto.description}}</p>
+            </div>
+            <div class="col-1 btn-edit-ajust">
+                <div class="cont cont-buttons">
+                    <!--BOTONES-->
+                    <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>
+                    <div id="btn-del"><a href="#" class="btn-right"><i class="bi bi-trash"></i></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
