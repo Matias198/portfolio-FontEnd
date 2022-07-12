@@ -5,8 +5,6 @@
   padding: 20px;
   border-color: lightgrey !important;
 }
-
-
 .mat-card#first-card {
   padding: 0px;
 }
@@ -185,112 +183,94 @@ div#btn-edit {
   margin-bottom: 10px;
 }
 
-	/* Coded with love by Mutiullah Samim */
-  body,
-  html {
-      margin: 0;
-      padding: 50px;
-      height: 100%;
-      background: #60a3bc !important;
-  }
-  .user_card {
-      height: 400px;
-      width: 390px;
-      margin-top: auto;
-      margin-bottom: auto;
-      background: #f39c12;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      padding: 10px;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      border-radius: 5px;
-
-  }
-  .brand_logo_container {
-      position: absolute;
-      height: 170px;
-      width: 170px;
-      top: -75px;
-      border-radius: 50%;
-      background: #60a3bc;
-      padding: 10px;
-      text-align: center;
-  }
-  .brand_logo {
-      height: 150px;
-      width: 150px;
-      border-radius: 50%;
-      border: 2px solid white;
-  }
-  .form_container {
-      margin-top: 100px;
-  }
-  .login_btn {
-      width: 100%;
-      background: #c0392b !important;
-      color: white !important;
-  }
-  .login_btn:focus {
-      box-shadow: none !important;
-      outline: 0px !important;
-  }
-  .login_container {
-      padding: 0 2rem;
-  }
-  .input-group-text {
-      background: #c0392b !important;
-      color: white !important;
-      border: 0 !important;
-      border-radius: 0.25rem 0 0 0.25rem !important;
-  }
-  .input_user,
-  .input_pass:focus {
-      box-shadow: none !important;
-      outline: 0px !important;
-  }
-  .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-      background-color: #c0392b !important;
-  }
-
-  .container_card {
-    margin-top: auto;
-    margin-bottom: auto;
-    background-color: #f39c12;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 5px;
-
+.modal_top{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #111111bd;
+  z-index: 1;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
 }
 
+.modal--show{
+  opacity: 1;
+  pointer-events: unset;
+}
 
-  .divider-text {
-    position: relative;
-    text-align: center;
-    margin-top: 15px;
-    margin-bottom: 15px;
+.modal_container{
+  margin: auto;
+  width: 90%;
+  max-width: 400px;
+  max-height: 90%;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 3em 2.5em;
+  display: grid;
+  gap: 1em;
+  place-items: center;
+  grid-auto-columns: 100%;
 }
-.divider-text span {
-    padding: 7px;
-    font-size: 12px;
-    position: relative;   
-    z-index: 2;
+
+.modal_titulo{
+  margin-top: 15%;
+  font-size: 2.5rem;
 }
-.divider-text:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    border-bottom: 1px solid #ddd;
-    top: 55%;
-    left: 0;
-    z-index: 1;
+
+.modal_ingresar{
+  text-decoration: none;
+  color: #fff;
+  background-color: #F26250;
+  padding: 1em 3em;
+  border: 1px solid;
+  border-radius: 6px;
+  display: inline-block;
+  font-weight: 300;
+  transition: background-color .3s;
+}
+
+.modal_ingresar:hover{
+  color: #F26250;
+  background-color: #fff;
+}
+
+.modal_close{
+  text-decoration: none;
+  color: black;
+  background-color: #696666;
+  padding: 1em 3em;
+  border: 1px solid;
+  border-radius: 6px;
+  display: inline-block;
+  font-weight: 300;
+  transition: background-color .3s;
+}
+
+.modal_close:hover{
+  color: #696666;
+  background-color: black;
+}
+
+.brand_logo_container {
+  position: absolute;
+  height: 170px;
+  width: 170px;
+  top: 9%;
+  border-radius: 50%;
+  background: white;
+  padding: 10px;
+  text-align: center;
+}
+.brand_logo {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: 5px solid white;
+}
+
+.hidden{
+  display: none;
 }

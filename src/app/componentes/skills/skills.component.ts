@@ -12,7 +12,8 @@ export class SkillsComponent implements OnInit {
 
   ngOnInit(): void {
     this.datosPorfolio.obtenerDatos().subscribe(data =>{
-      this.skillsList = data.skills;
+      const obj = JSON.parse(JSON.stringify(data))
+      this.skillsList = obj.skills;
     })
   }
 }

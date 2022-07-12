@@ -9,14 +9,14 @@
         <div class="card-containers" *ngFor="let experience of experienceList">
             <div class="cont cont-img">
                 <!--IMAGEN-->
-                <img class="img-exp" src="{{experience.img}}">
+                <img class="img-exp" src="{{experience.imagen}}">
             </div>
             <div class="cont cont-text">
                 <!--TEXTO-->
-                <h2 class="h2-title">{{experience.position}}</h2>
-                <p class="p-title">{{experience.company}} - {{experience.mode}}</p>
-                <p class="p-anio">{{experience.start}} - {{experience.end}} - {{experience.timeElasped}}</p>
-                <p class="p-lugar">{{experience.place}}</p>
+                <h2 class="h2-title">{{experience.titulo}}</h2>
+                <p class="p-title">{{experience.establecimiento}} - {{experience.lugar}}</p>
+                <p class="p-anio">{{experience.desde}} - {{experience.hasta}} - {{experience.duracion}}</p>
+                <p class="p-lugar">{{experience.ciudad}} - {{experience.provincia}}, {{experience.pais}}</p>
             </div>
             <div class="cont cont-buttons">
                 <!--BOTONES-->
@@ -36,13 +36,13 @@
         <div class="card-containers"  *ngFor="let education of educationList">
             <div class="cont cont-img">
                 <!--IMAGEN-->
-                <img class="img-exp" src="{{education.img}}">
+                <img class="img-exp" src="{{education.imagen}}">
             </div>
             <div class="cont cont-text">
                 <!--TEXTO-->
-                <h2 class="h2-title">{{education.school}}</h2>
-                <p class="p-title">{{education.title}}, {{education.career}}, {{education.score}}</p>
-                <p class="p-subtitle">{{education.start}} - {{education.end}}</p>
+                <h2 class="h2-title">{{education.escuela}}</h2>
+                <p class="p-title">{{education.titulo}}, {{education.carrera}}, {{education.puntaje}}</p>
+                <p class="p-subtitle">{{education.inicio}} - {{education.fin}}</p>
             </div>
             <div class="cont cont-buttons">
                 <!--BOTONES-->

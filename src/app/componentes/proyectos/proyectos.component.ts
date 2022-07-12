@@ -12,7 +12,8 @@ export class ProyectosComponent implements OnInit {
 
   ngOnInit(): void {
     this.datosPorfolio.obtenerDatos().subscribe(data =>{
-      this.proyectList = data.archivements;
+      const obj = JSON.parse(JSON.stringify(data))
+      this.proyectList = obj.proyectos;
     })
   }
 

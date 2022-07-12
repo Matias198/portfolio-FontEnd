@@ -1,31 +1,31 @@
 <!--#DATOS DEL PERFIL:-->
 <div class="card mat-card" id="first-card">
     <div id="profile-background"><img
-            src="{{miPorfolio.backImage}}"></div>
+            src="{{miPorfolio.image_background}}"></div>
     <div id="info" style="padding: 16px">
         <div>
             <img class="profile-image"
-                src="{{miPorfolio.image}}">
+                src="{{miPorfolio.image_perfil}}">
             <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>
         </div>
         <div id="info-data">
             <div id="div-data">
-                <h1 id="nombreUsuario">{{miPorfolio.name}}</h1>
-                <div id="info-persona">{{miPorfolio.position}}</div>
+                <h1 id="nombreUsuario">{{miPorfolio.nombres}} {{miPorfolio.apellido}}</h1>
+                <div id="info-persona">{{miPorfolio.ocupacion}}</div>
                 <div>
-                    <span id="info-lugar">{{miPorfolio.ubication}}</span>
+                    <span id="info-lugar">{{miPorfolio.nacionalidad}}</span>
                     <span><a href="#" id="info-contacto">Informacion de contacto</a></span>
                 </div>
             </div>
             <div id="info-academyc">
                 <ul id="info-details">
-                    <li><a href="{{miPorfolio.company.url}}" target="_blank">
-                            <img class="img-li" src="{{miPorfolio.company.img}}">
-                            <h2>{{miPorfolio.company.name}}</h2>
+                    <li><a href="{{miPorfolio.compania.url}}" target="_blank">
+                            <img class="img-li" src="{{miPorfolio.compania.imagen}}">
+                            <h2>{{miPorfolio.compania.nombre}}</h2>
                         </a></li>
-                    <li><a href="{{miPorfolio.school.url}}" target="_blank">
-                            <img class="img-li" src="{{miPorfolio.school.img}}">
-                            <h2>{{miPorfolio.school.name}}</h2>
+                    <li><a href="{{miPorfolio.escuela.url}}" target="_blank">
+                            <img class="img-li" src="{{miPorfolio.escuela.imagen}}">
+                            <h2>{{miPorfolio.escuela.nombre}}</h2>
                         </a></li>
                 </ul>
             </div>

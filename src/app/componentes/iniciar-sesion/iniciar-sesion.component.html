@@ -13,12 +13,12 @@
 						<div class="input-group-append">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" formControlName="name" 
-						[ngClass]="{'is-invalid': name?.errors && name?.touched, 'is-valid': !name?.errors && name?.touched}"
-						name="" class="form-control input_user" value="" placeholder="usuario">
+						<input type="text" formControlName="id_usuario" 
+						[ngClass]="{'is-invalid': id_usuario?.errors && id_usuario?.touched, 'is-valid': !id_usuario?.errors && id_usuario?.touched}"
+						name="" class="form-control input_user" placeholder="DNI">
 					</div>
-					<div *ngIf="name?.errors && name?.touched">
-						<p *ngIf="name?.hasError('required')" class="text-danger">
+					<div *ngIf="id_usuario?.errors && id_usuario?.touched">
+						<p *ngIf="id_usuario?.hasError('required')" class="text-danger">
 							Se requiere un nombre de usuario.
 						</p>
 					</div>
@@ -28,7 +28,7 @@
 						</div>
 						<input type="password" formControlName="password" 
 						[ngClass]="{'is-invalid': password?.errors && password?.touched, 'is-valid': !password?.errors && password?.touched}"
-						name="" class="form-control input_pass" value="" placeholder="contraseña">
+						name="" class="form-control input_pass" placeholder="contraseña">
 					</div>
 					<div *ngIf="password?.errors && password?.touched">
 						<p *ngIf="password?.hasError('required')" class="text-danger">

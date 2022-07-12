@@ -2,8 +2,7 @@
     <div class="card bg-light mx-auto">
         <article class="card-body mx-auto">
             <h4 class="card-title mt-3 text-center">Crear cuenta</h4>
-            <form  [formGroup] ="formDatos" (ngSubmit)="onEnviar($event)">
-
+            <form  [formGroup] ="form" (ngSubmit)="onEnviar($event)">
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-address-card"></i> </span>
@@ -293,6 +292,5 @@
             </form>
         </article>
     </div> <!-- card.// -->
-
 </div>
 <!--container end.//-->

@@ -1,16 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AutenticationService } from './autentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PorfolioService {
-  url="https://porfolio-matias-fernandez.herokuapp.com/";
-  constructor(private http:HttpClient) { }
+  //url="https://porfolio-matias-fernandez.herokuapp.com/";
+  url = "http://localhost:8080/"
+  dni = 41419890;
+  constructor(private http:HttpClient, private autenticationService:AutenticationService) { }
 
   obtenerDatos():Observable<any> {
-    //return this.http.get('./assets/data/data.json');
-    return this.http.get(this.url + 'persona');
+    //console.log(this.autenticationService.usuarioAutenticado.getItem("dni"))
+    return this.http.get(this.url + 'portfolio?dni=' + this.dni);
   }
 }
