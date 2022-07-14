@@ -15,7 +15,6 @@ import { PortfolioComponent } from './componentes/portfolio/portfolio.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { PorfolioService } from './servicios/porfolio.service';
 import { InterceptorService } from './servicios/interceptor.service';
-import { RegistrarUsuarioComponent } from './componentes/registrar-usuario/registrar-usuario.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,7 @@ import { RegistrarUsuarioComponent } from './componentes/registrar-usuario/regis
     SkillsComponent,
     ProyectosComponent,
     IniciarSesionComponent,
-    PortfolioComponent,
-    RegistrarUsuarioComponent
+    PortfolioComponent
   ],
   imports: [
     BrowserModule,

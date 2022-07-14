@@ -10,12 +10,14 @@ import { PorfolioService } from 'src/app/servicios/porfolio.service';
 export class AcercaDeComponent implements OnInit {
   acercaDeList:any;
   form: FormGroup;
+  usuarioJson:any;
   url = "http://localhost:8080/"
   constructor(private datosPorfolio:PorfolioService, private formBuilder: FormBuilder,) { 
     this.form = this.formBuilder.group({
       titulo: ['', [Validators.required], Validators.maxLength(255)],
       descripcion: ['', [Validators.required, Validators.maxLength(255)]]
     });
+    this.usuarioJson = JSON.parse(sessionStorage.getItem('currentUser')||'{}');
   }
 
   get titulo(){

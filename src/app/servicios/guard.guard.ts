@@ -14,10 +14,10 @@ export class GuardGuard implements CanActivate {
     :Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
     let currentUser = this.autenticationService.usuarioAutenticado;
-    if (currentUser && currentUser.accessToken){
+    if (currentUser && currentUser.token){
       return true;
-    }else{
-      this.rutas.navigate(['portfolio']);
+    }else{      
+      this.rutas.navigate(['iniciar-sesion']);
       return false;
     }
   }

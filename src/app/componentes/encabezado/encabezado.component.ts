@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { Router } from '@angular/router';
 import { AutenticationService } from 'src/app/servicios/autentication.service';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-encabezado',
@@ -13,24 +14,26 @@ export class EncabezadoComponent implements OnInit {
   nombres: any;
   apellido: any;
   form: FormGroup;
+  usuarioJson:any;
   constructor(
     private formBuilder: FormBuilder,
     private datosPorfolio: PorfolioService,
     private ruta: Router,
-    private autenticationService:AutenticationService
+    private autenticationService: AutenticationService
   ) {
     this.form = this.formBuilder.group({
-      id_usuario: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      dni: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
+    this.usuarioJson = JSON.parse(sessionStorage.getItem('currentUser')||'{}');
   }
 
-  get id_usuario(){
-    return this.form.get('id_usuario')
+  get dni() {
+    return this.form.get('dni');
   }
 
-  get password(){
-    return this.form.get('password')
+  get password() {
+    return this.form.get('password');
   }
 
   ngOnInit(): void {
@@ -41,25 +44,34 @@ export class EncabezadoComponent implements OnInit {
     });
   }
 
+  onCerrarSesion(event: Event){
+    event.preventDefault;
+    window.sessionStorage.clear();
+    this.ruta.navigate(['iniciar-sesion']);
+  }
+
   onClick(event: Event) {
     event.preventDefault;
-    const elemento = document.querySelector('.modal_top')
-    elemento?.classList.add('modal--show')
+    const elemento = document.querySelector('.modal_top');
+    elemento?.classList.add('modal--show');
     //this.ruta.navigate(['iniciar-sesion']);
   }
 
   onClose(event: Event) {
     event.preventDefault;
-    const elemento = document.querySelector('.modal_top')
-    elemento?.classList.remove('modal--show')
+    const elemento = document.querySelector('.modal_top');
+    elemento?.classList.remove('modal--show');
   }
 
-  onEnviar(event:Event){
+  onEnviar(event: Event) {
     event.preventDefault;
-    console.log("DATA: " + JSON.stringify(this.form.value))
-    this.autenticationService.IniciarSesion(this.form.value).subscribe(data => {
-      console.log("(onEnviar) DATA:" + JSON.stringify(data))
-      this.ruta.navigate(["portfolio"])
-    })
+    this.autenticationService
+      .IniciarSesion(this.form.value)
+      .subscribe((data) => {
+        console.log(data);
+        this.ruta.navigate(['portfolio']);
+        const elemento = document.querySelector('.modal_top');
+        elemento?.classList.remove('modal--show');
+      });
   }
 }

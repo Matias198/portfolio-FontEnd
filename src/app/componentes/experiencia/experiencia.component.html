@@ -2,8 +2,10 @@
 <div class="card mat-card">
     <div>
         <div class="card-titles">
-            <h2>Experiencia</h2>
-            <div id="btn-add"><a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a></div>
+            <h2>Experiencia</h2> 
+            <div id="btn-add" *ngIf="usuarioJson.dni != 1">
+                <a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a>
+            </div> 
         </div>
         <!---->
         <div class="card-containers" *ngFor="let experience of experienceList">
@@ -18,7 +20,7 @@
                 <p class="p-anio">{{experience.desde}} - {{experience.hasta}} - {{experience.duracion}}</p>
                 <p class="p-lugar">{{experience.ciudad}} - {{experience.provincia}}, {{experience.pais}}</p>
             </div>
-            <div class="cont cont-buttons">
+            <div class="cont cont-buttons" *ngIf="usuarioJson.dni != 1">
                 <!--BOTONES-->
                 <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>
                 <div id="btn-del"><a href="#" class="btn-right"><i class="bi bi-trash"></i></a></div>
@@ -29,11 +31,13 @@
     <!--#EDUCACION:-->
     <div>
         <div class="card-titles">
-            <h2>Educacion</h2>
-            <div id="btn-add"><a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a></div>
+            <h2>Educacion</h2> 
+            <div id="btn-add" *ngIf="usuarioJson.dni != 1">
+                <a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a>
+            </div> 
         </div>
         <!---->
-        <div class="card-containers"  *ngFor="let education of educationList">
+        <div class="card-containers" *ngFor="let education of educationList">
             <div class="cont cont-img">
                 <!--IMAGEN-->
                 <img class="img-exp" src="{{education.imagen}}">
@@ -44,10 +48,11 @@
                 <p class="p-title">{{education.titulo}}, {{education.carrera}}, {{education.puntaje}}</p>
                 <p class="p-subtitle">{{education.inicio}} - {{education.fin}}</p>
             </div>
-            <div class="cont cont-buttons">
+            <div class="cont cont-buttons" *ngIf="usuarioJson.dni != 1">
                 <!--BOTONES-->
                 <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>
-                <div id="btn-del"><a href="#" class="btn-right"><i class="bi bi-trash"></i></a></div>
+                <div id="btn-del"><a href="#" class="btn-right"><i class="bi bi-trash"></i></a>
+                </div>
             </div>
         </div>
     </div>

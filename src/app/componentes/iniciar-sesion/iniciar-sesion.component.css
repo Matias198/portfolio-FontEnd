@@ -107,3 +107,11 @@
       left: 0;
       z-index: 1;
   }
+
+  .contenedor_main{
+    padding: 15%;
+  }
+
+  .super_contenedor_main{
+    background: #60a3bc !important;
+  }

@@ -1,8 +1,10 @@
 <!--#PROYECTOS:-->
 <div class="card mat-card">
     <div class="card-titles">
-        <h2>Proyectos</h2>
-        <div id="btn-add"><a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a></div>
+        <h2>Proyectos</h2> 
+        <div id="btn-add" *ngIf="usuarioJson.dni != 1">
+            <a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a>
+        </div>
     </div>
     <!--ELEMENTO 1-->
     <div class="container" style="margin-bottom: 2%;" *ngFor="let proyecto of proyectList">
@@ -11,7 +13,7 @@
                 <a class="p-title-proyect" href="#">{{proyecto.titulo}}</a>
                 <p class="p-body-proyect">{{proyecto.descripcion}}</p>
             </div>
-            <div class="col-1 btn-edit-ajust">
+            <div class="col-1 btn-edit-ajust" *ngIf="usuarioJson.dni != 1">
                 <div class="cont cont-buttons">
                     <!--BOTONES-->
                     <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>

@@ -9,11 +9,10 @@ import { AutenticationService } from './autentication.service';
 export class PorfolioService {
   //url="https://porfolio-matias-fernandez.herokuapp.com/";
   url = "http://localhost:8080/"
-  dni = 41419890;
   constructor(private http:HttpClient, private autenticationService:AutenticationService) { }
 
   obtenerDatos():Observable<any> {
-    //console.log(this.autenticationService.usuarioAutenticado.getItem("dni"))
-    return this.http.get(this.url + 'portfolio?dni=' + this.dni);
+    var usuarioJson = JSON.parse(sessionStorage.getItem('currentUser')||'{}');
+    return this.http.get(this.url + 'portfolio?dni=' + usuarioJson.dni);
   }
 }

@@ -37,7 +37,14 @@
                         <span class="visually-hidden">Button</span>
                     </a>
                 </div>
-                <button type="button" class="btn btn-outline-success" (click)="onClick($event)">Login</button>
+                <div *ngIf="usuarioJson.dni != 1; else esGuest">
+                    <button type="button" class="btn btn-outline-success" (click)="onCerrarSesion($event)">Cerrar Sesion</button>
+                </div>
+                <ng-template #esGuest>
+                    <div>
+                        <button type="button" class="btn btn-outline-success" (click)="onCerrarSesion($event)">Iniciar Sesion</button>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
@@ -57,12 +64,12 @@
                     <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input type="number" formControlName="id_usuario"
-                        [ngClass]="{'is-invalid': id_usuario?.errors && id_usuario?.touched, 'is-valid': !id_usuario?.errors && id_usuario?.touched}"
+                    <input type="number" formControlName="dni"
+                        [ngClass]="{'is-invalid': dni?.errors && dni?.touched, 'is-valid': !dni?.errors && dni?.touched}"
                         name="" class="form-control input_user" placeholder="DNI">
                 </div>
-                <div *ngIf="id_usuario?.errors && id_usuario?.touched">
-                    <p *ngIf="id_usuario?.hasError('required')" class="text-danger">
+                <div *ngIf="dni?.errors && dni?.touched">
+                    <p *ngIf="dni?.hasError('required')" class="text-danger">
                         Se requiere un nombre de usuario.
                     </p>
                 </div>

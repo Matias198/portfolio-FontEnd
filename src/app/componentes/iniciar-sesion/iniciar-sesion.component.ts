@@ -10,16 +10,18 @@ import { AutenticationService } from 'src/app/servicios/autentication.service';
 })
 export class IniciarSesionComponent implements OnInit {
   form:FormGroup;
+  formGuest:FormGroup;
   constructor(private formBuilder:FormBuilder,private autenticationService:AutenticationService, private ruta:Router) { 
     this.form=this.formBuilder.group(
       {
-        id_usuario:['', [Validators.required]],
-        password:['', [Validators.required, Validators.minLength(8)]]/*,
-        deviceInfo:this.formBuilder.group({
-          deviceId: ["17867868768"],
-          deviceType: ["DEVICE_TYPE_ANDROID"],
-          notificationToken: ["67657575eececc34"]
-        })*/
+        dni:['', [Validators.required]],
+        password:['', [Validators.required, Validators.minLength(8)]]
+      }
+    )
+    this.formGuest=this.formBuilder.group(
+      {
+        dni:[1],
+        password:['guest']
       }
     )
   }
@@ -27,8 +29,8 @@ export class IniciarSesionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  get id_usuario(){
-    return this.form.get('id_usuario')
+  get dni(){
+    return this.form.get('dni')
   }
 
   get password(){
@@ -37,9 +39,16 @@ export class IniciarSesionComponent implements OnInit {
 
   onEnviar(event:Event){
     event.preventDefault;
-    console.log("DATA: " + JSON.stringify(this.form.value))
     this.autenticationService.IniciarSesion(this.form.value).subscribe(data => {
-      console.log("DATA:" + JSON.stringify(data))
+      console.log(data)
+      this.ruta.navigate(["portfolio"])
+    })
+  }
+
+  onGuest(event:Event){
+    event.preventDefault;
+    this.autenticationService.IniciarSesion(this.formGuest.value).subscribe(data => {
+      console.log(data)
       this.ruta.navigate(["portfolio"])
     })
   }
