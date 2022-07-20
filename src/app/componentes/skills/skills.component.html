@@ -3,7 +3,8 @@
     <div class="card-titles">
         <h2>Hard Skills & Soft Skills</h2>
         <div id="btn-add" *ngIf="usuarioJson.dni != 1">
-            <a href="#"><i class="bi bi-plus-square-dotted"></i></a>
+            <a type="button" style="color: rgb(46, 152, 250)"><i class="bi bi-plus-square-dotted"
+                    (click)="onNuevo($event)"></i></a>
         </div>
     </div>
     <!--ELEMENTOS-->
@@ -20,10 +21,86 @@
             <div class="col-1 btn-edit-ajust" *ngIf="usuarioJson.dni != 1">
                 <div class="cont cont-buttons">
                     <!--BOTONES-->
-                    <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>
-                    <div id="btn-del"><a href="#" class="btn-right"><i class="bi bi-trash"></i></a></div>
+                    <div id="btn-edit"><a type="button" style="color: rgb(46, 152, 250)" class="btn-right"
+                            (click)="onEdit(skill)"><i class="bi bi-pencil-square"></i></a></div>
+                    <div id="btn-del"><a type="button" style="color: rgb(46, 152, 250)" class="btn-right"
+                            (click)="onEliminar(skill)"><i class="bi bi-trash"></i></a></div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!--SKILLS-->
+<div class="skill_edit">
+    <div class="modal_container_skill">
+        <h2 class="modal_titulo">Editar "{{skill}}"</h2>
+        <form action="submit" class="modal_form" [formGroup]="form" (ngSubmit)="onEnviar($event)">
+            <!--TITULO-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="titulo" [ngClass]="{'is-invalid': titulo?.errors && titulo?.touched, 
+'is-valid': !titulo?.errors && titulo?.touched}" class="form-control input_pass" placeholder="titulo">
+            </div>
+            <div *ngIf="titulo?.errors && titulo?.touched">
+                <p *ngIf="titulo?.hasError('required')" class="text-danger">
+                    Se requiere un titulo.
+                </p>
+            </div>
+            <!--PROGRESO-->
+            <div class="input-group mb-2">
+                <input type="number" formControlName="progreso" [ngClass]="{'is-invalid': progreso?.errors && progreso?.touched, 
+'is-valid': !progreso?.errors && progreso?.touched}" class="form-control input_pass" placeholder="progreso">
+            </div>
+            <div *ngIf="progreso?.errors && progreso?.touched">
+                <p *ngIf="progreso?.hasError('required')" class="text-danger">
+                    Se requiere un valor de progreso.
+                </p>
+            </div>
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!form.valid">Modificar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="skill_delete">
+    <div class="modal_container_skill_delete">
+        <h2 class="modal_titulo">Seguro que desea eliminar "{{skill}}"?</h2>
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <button type="button" class="modal_ingresar m-2" (click)="onDelete($event)">Confirmar</button>
+            <button type="button" class="modal_close m-2" (click)="onClose($event)">Cancelar</button>
+        </div>
+    </div>
+</div>
+<div class="skill_nueva">
+    <div class="modal_container_skill">
+        <h2 class="modal_titulo">Nuevo registro de habilidad</h2>
+        <form action="submit" class="modal_form" [formGroup]="form" (ngSubmit)="onNueva($event)">
+            <!--TITULO-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="titulo" [ngClass]="{'is-invalid': titulo?.errors && titulo?.touched, 
+    'is-valid': !titulo?.errors && titulo?.touched}" class="form-control input_pass" placeholder="titulo">
+            </div>
+            <div *ngIf="titulo?.errors && titulo?.touched">
+                <p *ngIf="titulo?.hasError('required')" class="text-danger">
+                    Se requiere un titulo.
+                </p>
+            </div>
+            <!--PROGRESO-->
+            <div class="input-group mb-2">
+                <input type="number" formControlName="progreso" [ngClass]="{'is-invalid': progreso?.errors && progreso?.touched, 
+            'is-valid': !progreso?.errors && progreso?.touched}" class="form-control input_pass"
+                    placeholder="progreso">
+            </div>
+            <div *ngIf="progreso?.errors && progreso?.touched">
+                <p *ngIf="progreso?.hasError('required')" class="text-danger">
+                    Se requiere un valor de progreso.
+                </p>
+            </div>
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!form.valid">Guardar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
     </div>
 </div>

@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EncabezadoComponent } from './componentes/encabezado/encabezado.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
-import { AcercaDeComponent } from './componentes/acerca-de/acerca-de.component';
 import { ExperienciaComponent } from './componentes/experiencia/experiencia.component';
 import { SkillsComponent } from './componentes/skills/skills.component';
 import { ProyectosComponent } from './componentes/proyectos/proyectos.component';
@@ -21,7 +20,6 @@ import { InterceptorService } from './servicios/interceptor.service';
     AppComponent,
     EncabezadoComponent,
     PerfilComponent,
-    AcercaDeComponent,
     ExperienciaComponent,
     SkillsComponent,
     ProyectosComponent,

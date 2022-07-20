@@ -50,28 +50,4 @@ export class EncabezadoComponent implements OnInit {
     this.ruta.navigate(['iniciar-sesion']);
   }
 
-  onClick(event: Event) {
-    event.preventDefault;
-    const elemento = document.querySelector('.modal_top');
-    elemento?.classList.add('modal--show');
-    //this.ruta.navigate(['iniciar-sesion']);
-  }
-
-  onClose(event: Event) {
-    event.preventDefault;
-    const elemento = document.querySelector('.modal_top');
-    elemento?.classList.remove('modal--show');
-  }
-
-  onEnviar(event: Event) {
-    event.preventDefault;
-    this.autenticationService
-      .IniciarSesion(this.form.value)
-      .subscribe((data) => {
-        console.log(data);
-        this.ruta.navigate(['portfolio']);
-        const elemento = document.querySelector('.modal_top');
-        elemento?.classList.remove('modal--show');
-      });
-  }
 }

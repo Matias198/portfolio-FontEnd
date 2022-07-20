@@ -1,25 +1,122 @@
 <!--#PROYECTOS:-->
 <div class="card mat-card">
     <div class="card-titles">
-        <h2>Proyectos</h2> 
+        <h2>Proyectos</h2>
         <div id="btn-add" *ngIf="usuarioJson.dni != 1">
-            <a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a>
+            <a type="button" style="color: rgb(46, 152, 250)" class="btn-right"><i class="bi bi-plus-square-dotted"
+                    (click)="onNuevo($event)"></i></a>
         </div>
     </div>
     <!--ELEMENTO 1-->
     <div class="container" style="margin-bottom: 2%;" *ngFor="let proyecto of proyectList">
         <div class="row">
             <div class="col-11 item-center">
-                <a class="p-title-proyect" href="#">{{proyecto.titulo}}</a>
+                <a class="p-title-proyect" href="{{proyecto.link}}" target="_blank">{{proyecto.titulo}}</a>
                 <p class="p-body-proyect">{{proyecto.descripcion}}</p>
             </div>
             <div class="col-1 btn-edit-ajust" *ngIf="usuarioJson.dni != 1">
                 <div class="cont cont-buttons">
                     <!--BOTONES-->
-                    <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>
-                    <div id="btn-del"><a href="#" class="btn-right"><i class="bi bi-trash"></i></a></div>
+                    <div id="btn-edit"><a type="button" style="color: rgb(46, 152, 250)" class="btn-right"
+                            (click)="onEdit(proyecto)"><i class="bi bi-pencil-square"></i></a></div>
+                    <div id="btn-del"><a type="button" style="color: rgb(46, 152, 250)" class="btn-right"
+                            (click)="onEliminar(proyecto)"><i class="bi bi-trash"></i></a></div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+
+<!--PROYECTOS-->
+<div class="pro_edit">
+    <div class="modal_container_pro">
+        <h2 class="modal_titulo">Editar "{{t}}"</h2>
+        <form action="submit" class="modal_form" [formGroup]="form" (ngSubmit)="onEnviar($event)">
+            <!--TITULO-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="titulo" [ngClass]="{'is-invalid': titulo?.errors && titulo?.touched, 
+'is-valid': !titulo?.errors && titulo?.touched}" class="form-control input_pass" placeholder="titulo">
+            </div>
+            <div *ngIf="titulo?.errors && titulo?.touched">
+                <p *ngIf="titulo?.hasError('required')" class="text-danger">
+                    Se requiere un titulo.
+                </p>
+            </div>
+            <!--DESCRIPCION-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="descripcion" [ngClass]="{'is-invalid': descripcion?.errors && descripcion?.touched, 
+'is-valid': !descripcion?.errors && descripcion?.touched}" class="form-control input_pass" placeholder="descripcion">
+            </div>
+            <div *ngIf="descripcion?.errors && descripcion?.touched">
+                <p *ngIf="descripcion?.hasError('required')" class="text-danger">
+                    Se requiere una descripcion.
+                </p>
+            </div>
+             <!--LINK-->
+             <div class="input-group mb-2">
+                <input type="text" formControlName="link" [ngClass]="{'is-invalid': link?.errors && link?.touched, 
+'is-valid': !link?.errors && link?.touched}" class="form-control input_pass" placeholder="link">
+            </div>
+            <div *ngIf="link?.errors && link?.touched">
+                <p *ngIf="link?.hasError('required')" class="text-danger">
+                    Se requiere un link.
+                </p>
+            </div>
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!form.valid">Modificar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="pro_delete">
+    <div class="modal_container_pro_delete">
+        <h2 class="modal_titulo">Seguro que desea eliminar "{{t}}"?</h2>
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <button type="button" class="modal_ingresar m-2" (click)="onDelete($event)">Confirmar</button>
+            <button type="button" class="modal_close m-2" (click)="onClose($event)">Cancelar</button>
+        </div>
+    </div>
+</div>
+<div class="pro_nueva">
+    <div class="modal_container_pro">
+        <h2 class="modal_titulo">Nuevo registro de proyecto</h2>
+        <form action="submit" class="modal_form" [formGroup]="form" (ngSubmit)="onNueva($event)">
+            <!--TITULO-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="titulo" [ngClass]="{'is-invalid': titulo?.errors && titulo?.touched, 
+'is-valid': !titulo?.errors && titulo?.touched}" class="form-control input_pass" placeholder="titulo">
+            </div>
+            <div *ngIf="titulo?.errors && titulo?.touched">
+                <p *ngIf="titulo?.hasError('required')" class="text-danger">
+                    Se requiere un titulo.
+                </p>
+            </div>
+            <!--DESCRIPCION-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="descripcion" [ngClass]="{'is-invalid': descripcion?.errors && descripcion?.touched, 
+'is-valid': !descripcion?.errors && descripcion?.touched}" class="form-control input_pass" placeholder="descripcion">
+            </div>
+            <div *ngIf="descripcion?.errors && descripcion?.touched">
+                <p *ngIf="descripcion?.hasError('required')" class="text-danger">
+                    Se requiere una descripcion.
+                </p>
+            </div>
+            <!--LINK-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="link" [ngClass]="{'is-invalid': link?.errors && link?.touched, 
+'is-valid': !link?.errors && link?.touched}" class="form-control input_pass" placeholder="link">
+            </div>
+            <div *ngIf="link?.errors && link?.touched">
+                <p *ngIf="link?.hasError('required')" class="text-danger">
+                    Se requiere un link.
+                </p>
+            </div>
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!form.valid">Guardar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
     </div>
 </div>

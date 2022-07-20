@@ -5,7 +5,7 @@
         <div>
             <img class="profile-image" src="{{miPorfolio.image_perfil}}">
             <div id="btn-edit" *ngIf="usuarioJson.dni != 1">
-                <a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a>
+                <a type="button" style="color: rgb(46, 152, 250)" class="btn-right"><i class="bi bi-pencil-square"></i></a>
             </div>
         </div>
         <div id="info-data">
@@ -14,7 +14,7 @@
                 <div id="info-persona">{{miPorfolio.ocupacion}}</div>
                 <div>
                     <span id="info-lugar">{{miPorfolio.nacionalidad}} </span>
-                    <span><a href="#" id="info-contacto">Informacion de contacto</a></span>
+                    <span><a type="button" style="color: rgb(46, 152, 250)" id="info-contacto">Informacion de contacto</a></span>
                 </div>
             </div>
             <div id="info-academyc">
@@ -29,11 +29,120 @@
                         </a></li>
                 </ul>
             </div>
-        </div>
+        </div> 
         <div id="info-actions">
             <button class="btn btn-primary" type="button">Tengo interés en</button>
-            <button class="btn btn-light" type="button" id="btn-edit" *ngIf="usuarioJson.dni != 1">Añadir Sección</button>
+            <button class="btn btn-light" type="button" id="btn-edit" 
+            *ngIf="usuarioJson.dni != 1" (click)="onNuevo($event)">Añadir Sección</button>
             <button class="btn btn-light" type="button">Más</button>
         </div>
+    </div>
+</div>
+<!--#ACERCA DE:-->
+<div>
+    <div class="card mat-card" *ngFor="let acercade of acercaDeList">
+        <div class="card-titles">
+            <h2>{{acercade.titulo}}</h2>
+            <div class="cont cont-buttons" *ngIf="usuarioJson.dni != 1">
+                <div id="btn-edit">
+                    <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEdit(acercade)">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </div>
+
+                <div id="btn-del">
+                    <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEliminar(acercade)">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p>{{acercade.descripcion}}</p>
+        </div>
+    </div>
+</div>
+<div class="acercade_edit">
+    <div class="modal_container_acercade">
+        <h2 class="modal_titulo">Editar "{{t}}"</h2>
+        <form action="submit" class="modal_form" [formGroup]="form" (ngSubmit)="onEnviar($event)">
+            <div class="input-group mb-3">
+                <input type="text" formControlName="titulo" [ngClass]="{'is-invalid': titulo?.errors && titulo?.touched,
+                    'is-valid': !titulo?.errors && titulo?.touched}" class="form-control input_user"
+                    placeholder="titulo">
+            </div>
+            <div *ngIf="titulo?.errors && titulo?.touched">
+                <p *ngIf="titulo?.hasError('required')" class="text-danger">
+                    Se requiere un titulo.
+                </p>
+                <p *ngIf="titulo?.errors?.['maxlength']" class="text-danger">
+                    Maximo 255 caracteres.
+                </p>
+            </div>
+            <div class="input-group mb-2">
+                <input type="text" formControlName="descripcion" [ngClass]="{'is-invalid': descripcion?.errors && descripcion?.touched, 
+                'is-valid': !descripcion?.errors && descripcion?.touched}"
+                    class="form-control input_pass" placeholder="descripcion">
+            </div>
+            <div *ngIf="descripcion?.errors && descripcion?.touched">
+                <p *ngIf="descripcion?.hasError('required')" class="text-danger">
+                    Se requiere una descripcion.
+                </p>
+                <p *ngIf="descripcion?.errors?.['maxlength']" class="text-danger">
+                    Maximo 255 caracteres.
+                </p>
+            </div>
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!form.valid">Modificar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="acercade_delete">
+    <!--<div class="modal_top">-->
+    <div class="modal_container_acercade_delete">
+        <h2 class="modal_titulo">Seguro que desea eliminar "{{t}}"?</h2>
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <button type="button" class="modal_ingresar m-2" (click)="onDelete($event)">Confirmar</button>
+            <button type="button" class="modal_close m-2" (click)="onClose($event)">Cancelar</button>
+        </div>
+    </div>
+</div>
+<div class="acercade_nuevo">
+    <div class="modal_container_acercade">
+        <h2 class="modal_titulo">Nueva sección</h2>
+        <form action="submit" class="modal_form" [formGroup]="form" (ngSubmit)="onEnviarNuevo($event)">
+            <div class="input-group mb-3">
+                <input type="text" formControlName="titulo" [ngClass]="{'is-invalid': titulo?.errors && titulo?.touched,
+                    'is-valid': !titulo?.errors && titulo?.touched}" class="form-control input_user"
+                    placeholder="titulo">
+            </div>
+            <div *ngIf="titulo?.errors && titulo?.touched">
+                <p *ngIf="titulo?.hasError('required')" class="text-danger">
+                    Se requiere un titulo.
+                </p>
+                <p *ngIf="titulo?.errors?.['maxlength']" class="text-danger">
+                    Maximo 255 caracteres.
+                </p>
+            </div>
+            <div class="input-group mb-2">
+                <input type="text" formControlName="descripcion" [ngClass]="{'is-invalid': descripcion?.errors && descripcion?.touched, 
+                'is-valid': !descripcion?.errors && descripcion?.touched}"
+                    class="form-control input_pass" placeholder="descripcion">
+            </div>
+            <div *ngIf="descripcion?.errors && descripcion?.touched">
+                <p *ngIf="descripcion?.hasError('required')" class="text-danger">
+                    Se requiere una descripcion.
+                </p>
+                <p *ngIf="descripcion?.errors?.['maxlength']" class="text-danger">
+                    Maximo 255 caracteres.
+                </p>
+            </div>
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!form.valid">Guardar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
     </div>
 </div>

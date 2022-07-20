@@ -2,10 +2,11 @@
 <div class="card mat-card">
     <div>
         <div class="card-titles">
-            <h2>Experiencia</h2> 
+            <h2>Experiencia</h2>
             <div id="btn-add" *ngIf="usuarioJson.dni != 1">
-                <a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a>
-            </div> 
+                <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onNuevoE($event)"><i
+                        class="bi bi-plus-square-dotted"></i></a>
+            </div>
         </div>
         <!---->
         <div class="card-containers" *ngFor="let experience of experienceList">
@@ -22,8 +23,14 @@
             </div>
             <div class="cont cont-buttons" *ngIf="usuarioJson.dni != 1">
                 <!--BOTONES-->
-                <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>
-                <div id="btn-del"><a href="#" class="btn-right"><i class="bi bi-trash"></i></a></div>
+                <div id="btn-edit"><a type="button" style="color: rgb(46, 152, 250)" class="btn-right"
+                        (click)="onEditExp(experience)">
+                        <i class="bi bi-pencil-square"></i></a>
+                </div>
+                <div id="btn-del"><a type="button" style="color: rgb(46, 152, 250)" class="btn-right"
+                        (click)="onEliminarExp(experience)">
+                        <i class="bi bi-trash"></i></a>
+                </div>
             </div>
         </div>
     </div>
@@ -31,10 +38,11 @@
     <!--#EDUCACION:-->
     <div>
         <div class="card-titles">
-            <h2>Educacion</h2> 
+            <h2>Educacion</h2>
             <div id="btn-add" *ngIf="usuarioJson.dni != 1">
-                <a href="#" class="btn-right"><i class="bi bi-plus-square-dotted"></i></a>
-            </div> 
+                <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onNuevoA($event)"><i
+                        class="bi bi-plus-square-dotted"></i></a>
+            </div>
         </div>
         <!---->
         <div class="card-containers" *ngFor="let education of educationList">
@@ -50,10 +58,529 @@
             </div>
             <div class="cont cont-buttons" *ngIf="usuarioJson.dni != 1">
                 <!--BOTONES-->
-                <div id="btn-edit"><a href="#" class="btn-right"><i class="bi bi-pencil-square"></i></a></div>
-                <div id="btn-del"><a href="#" class="btn-right"><i class="bi bi-trash"></i></a>
+                <div id="btn-edit">
+                    <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEditAca(education)">
+                        <i class="bi bi-pencil-square"></i></a>
+                </div>
+                <div id="btn-del">
+                    <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEliminarAca(education)">
+                        <i class="bi bi-trash"></i></a>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="exp_edit">
+    <div class="modal_container_exp">
+        <h2 class="modal_titulo">Editar "{{t}}"</h2>
+        <form action="submit" class="modal_form" [formGroup]="formExp" (ngSubmit)="onEnviarExp($event)">
+            <!--TITULO-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="titulo" [ngClass]="{'is-invalid': tituloExp?.errors && tituloExp?.touched,
+            'is-valid': !tituloExp?.errors && tituloExp?.touched}" class="form-control input_user"
+                    placeholder="titulo">
+            </div>
+            <div *ngIf="tituloExp?.errors && tituloExp?.touched">
+                <p *ngIf="tituloExp?.hasError('required')" class="text-danger">
+                    Se requiere un titulo.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!--ESTABLECIMIENTO-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="establecimiento" [ngClass]="{'is-invalid': establecimientoExp?.errors && establecimientoExp?.touched, 
+                'is-valid': !establecimientoExp?.errors && establecimientoExp?.touched}"
+                            class="form-control input_pass" placeholder="establecimiento">
+                    </div>
+                    <div *ngIf="establecimientoExp?.errors && establecimientoExp?.touched">
+                        <p *ngIf="establecimientoExp?.hasError('required')" class="text-danger">
+                            Se requiere un establecimiento.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--LUGAR-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="lugar" [ngClass]="{'is-invalid': lugarExp?.errors && lugarExp?.touched, 
+                'is-valid': !lugarExp?.errors && lugarExp?.touched}" class="form-control input_pass"
+                            placeholder="lugar">
+                    </div>
+                    <div *ngIf="lugarExp?.errors && lugarExp?.touched">
+                        <p *ngIf="lugarExp?.hasError('required')" class="text-danger">
+                            Se requiere un lugar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!--DESDE-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="desde" [ngClass]="{'is-invalid': desdeExp?.errors && desdeExp?.touched, 
+                'is-valid': !desdeExp?.errors && desdeExp?.touched}" class="form-control input_pass"
+                            placeholder="desde">
+                    </div>
+                    <div *ngIf="desdeExp?.errors && desdeExp?.touched">
+                        <p *ngIf="desdeExp?.hasError('required')" class="text-danger">
+                            Se requiere una fecha desde.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--HASTA-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="hasta" [ngClass]="{'is-invalid': hastaExp?.errors && hastaExp?.touched, 
+                'is-valid': !hastaExp?.errors && desdeExp?.touched}" class="form-control input_pass"
+                            placeholder="hasta">
+                    </div>
+                    <div *ngIf="hastaExp?.errors && hastaExp?.touched">
+                        <p *ngIf="hastaExp?.hasError('required')" class="text-danger">
+                            Se requiere un fecha hasta.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--DURACION-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="duracion" [ngClass]="{'is-invalid': duracionExp?.errors && duracionExp?.touched, 
+                'is-valid': !duracionExp?.errors && duracionExp?.touched}" class="form-control input_pass" placeholder="duracion">
+                    </div>
+                    <div *ngIf="duracionExp?.errors && duracionExp?.touched">
+                        <p *ngIf="duracionExp?.hasError('required')" class="text-danger">
+                            Se requiere un fecha hasta.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!--CIUDAD-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="ciudad" [ngClass]="{'is-invalid': ciudadExp?.errors && ciudadExp?.touched, 
+                'is-valid': !ciudadExp?.errors && ciudadExp?.touched}" class="form-control input_pass"
+                            placeholder="ciudad">
+                    </div>
+                    <div *ngIf="ciudadExp?.errors && ciudadExp?.touched">
+                        <p *ngIf="ciudadExp?.hasError('required')" class="text-danger">
+                            Se requiere un fecha hasta.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--PROVINCIA-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="provincia" [ngClass]="{'is-invalid': provinciaExp?.errors && provinciaExp?.touched, 
+                'is-valid': !provinciaExp?.errors && provinciaExp?.touched}" class="form-control input_pass"
+                            placeholder="provincia">
+                    </div>
+                    <div *ngIf="provinciaExp?.errors && provinciaExp?.touched">
+                        <p *ngIf="provinciaExp?.hasError('required')" class="text-danger">
+                            Se requiere un fecha hasta.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--PAIS-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="pais" [ngClass]="{'is-invalid': paisExp?.errors && paisExp?.touched, 
+                'is-valid': !paisExp?.errors && paisExp?.touched}" class="form-control input_pass" placeholder="pais">
+                    </div>
+                    <div *ngIf="paisExp?.errors && paisExp?.touched">
+                        <p *ngIf="paisExp?.hasError('required')" class="text-danger">
+                            Se requiere un fecha hasta.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!--IMAGEN-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="imagen" [ngClass]="{'is-invalid': imagenExp?.errors && imagenExp?.touched, 
+                'is-valid': !imagenExp?.errors && imagenExp?.touched}" class="form-control input_pass"
+                    placeholder="imagen">
+            </div>
+            <div *ngIf="imagenExp?.errors && imagenExp?.touched">
+                <p *ngIf="imagenExp?.hasError('required')" class="text-danger">
+                    Se requiere una imagen.
+                </p>
+            </div>
+
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!formExp.valid">Modificar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="exp_delete">
+    <!--<div class="modal_top">-->
+    <div class="modal_container_exp_delete">
+        <h2 class="modal_titulo">Seguro que desea eliminar "{{t}}"?</h2>
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <button type="button" class="modal_ingresar m-2" (click)="onDeleteExp($event)">Confirmar</button>
+            <button type="button" class="modal_close m-2" (click)="onClose($event)">Cancelar</button>
+        </div>
+    </div>
+</div>
+<div class="exp_nueva">
+    <div class="modal_container_exp">
+        <h2 class="modal_titulo">Experiencia nueva</h2>
+        <form action="submit" class="modal_form" [formGroup]="formExp" (ngSubmit)="onNuevaExp($event)">
+            <!--TITULO-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="titulo" [ngClass]="{'is-invalid': tituloExp?.errors && tituloExp?.touched,
+            'is-valid': !tituloExp?.errors && tituloExp?.touched}" class="form-control input_user"
+                    placeholder="titulo">
+            </div>
+            <div *ngIf="tituloExp?.errors && tituloExp?.touched">
+                <p *ngIf="tituloExp?.hasError('required')" class="text-danger">
+                    Se requiere un titulo.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!--ESTABLECIMIENTO-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="establecimiento" [ngClass]="{'is-invalid': establecimientoExp?.errors && establecimientoExp?.touched, 
+                'is-valid': !establecimientoExp?.errors && establecimientoExp?.touched}"
+                            class="form-control input_pass" placeholder="establecimiento">
+                    </div>
+                    <div *ngIf="establecimientoExp?.errors && establecimientoExp?.touched">
+                        <p *ngIf="establecimientoExp?.hasError('required')" class="text-danger">
+                            Se requiere un establecimiento.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--LUGAR-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="lugar" [ngClass]="{'is-invalid': lugarExp?.errors && lugarExp?.touched, 
+                'is-valid': !lugarExp?.errors && lugarExp?.touched}" class="form-control input_pass"
+                            placeholder="lugar">
+                    </div>
+                    <div *ngIf="lugarExp?.errors && lugarExp?.touched">
+                        <p *ngIf="lugarExp?.hasError('required')" class="text-danger">
+                            Se requiere un lugar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!--DESDE-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="desde" [ngClass]="{'is-invalid': desdeExp?.errors && desdeExp?.touched, 
+                'is-valid': !desdeExp?.errors && desdeExp?.touched}" class="form-control input_pass"
+                            placeholder="desde">
+                    </div>
+                    <div *ngIf="desdeExp?.errors && desdeExp?.touched">
+                        <p *ngIf="desdeExp?.hasError('required')" class="text-danger">
+                            Se requiere una fecha desde.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--HASTA-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="hasta" [ngClass]="{'is-invalid': hastaExp?.errors && hastaExp?.touched, 
+                'is-valid': !hastaExp?.errors && desdeExp?.touched}" class="form-control input_pass"
+                            placeholder="hasta">
+                    </div>
+                    <div *ngIf="hastaExp?.errors && hastaExp?.touched">
+                        <p *ngIf="hastaExp?.hasError('required')" class="text-danger">
+                            Se requiere un fecha hasta.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--DURACION-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="duracion" [ngClass]="{'is-invalid': duracionExp?.errors && duracionExp?.touched, 
+                'is-valid': !duracionExp?.errors && duracionExp?.touched}" class="form-control input_pass" placeholder="duracion">
+                    </div>
+                    <div *ngIf="duracionExp?.errors && duracionExp?.touched">
+                        <p *ngIf="duracionExp?.hasError('required')" class="text-danger">
+                            Se requiere un fecha hasta.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!--CIUDAD-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="ciudad" [ngClass]="{'is-invalid': ciudadExp?.errors && ciudadExp?.touched, 
+                'is-valid': !ciudadExp?.errors && ciudadExp?.touched}" class="form-control input_pass"
+                            placeholder="ciudad">
+                    </div>
+                    <div *ngIf="ciudadExp?.errors && ciudadExp?.touched">
+                        <p *ngIf="ciudadExp?.hasError('required')" class="text-danger">
+                            Se requiere un fecha hasta.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--PROVINCIA-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="provincia" [ngClass]="{'is-invalid': provinciaExp?.errors && provinciaExp?.touched, 
+                'is-valid': !provinciaExp?.errors && provinciaExp?.touched}" class="form-control input_pass"
+                            placeholder="provincia">
+                    </div>
+                    <div *ngIf="provinciaExp?.errors && provinciaExp?.touched">
+                        <p *ngIf="provinciaExp?.hasError('required')" class="text-danger">
+                            Se requiere un fecha hasta.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--PAIS-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="pais" [ngClass]="{'is-invalid': paisExp?.errors && paisExp?.touched, 
+                'is-valid': !paisExp?.errors && paisExp?.touched}" class="form-control input_pass" placeholder="pais">
+                    </div>
+                    <div *ngIf="paisExp?.errors && paisExp?.touched">
+                        <p *ngIf="paisExp?.hasError('required')" class="text-danger">
+                            Se requiere un fecha hasta.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!--IMAGEN-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="imagen" [ngClass]="{'is-invalid': imagenExp?.errors && imagenExp?.touched, 
+                'is-valid': !imagenExp?.errors && imagenExp?.touched}" class="form-control input_pass"
+                    placeholder="imagen">
+            </div>
+            <div *ngIf="imagenExp?.errors && imagenExp?.touched">
+                <p *ngIf="imagenExp?.hasError('required')" class="text-danger">
+                    Se requiere una imagen.
+                </p>
+            </div>
+
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!formExp.valid">Guardar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--ACADEMICO-->
+<div class="aca_edit">
+    <div class="modal_container_exp">
+        <h2 class="modal_titulo">Editar "{{ta}}"</h2>
+        <form action="submit" class="modal_form" [formGroup]="formAca" (ngSubmit)="onEnviarAca($event)">
+            <!--TITULO-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="titulo" [ngClass]="{'is-invalid': tituloAcademico?.errors && tituloAcademico?.touched,
+            'is-valid': !tituloAcademico?.errors && tituloAcademico?.touched}" class="form-control input_user"
+                    placeholder="titulo">
+            </div>
+            <div *ngIf="tituloAcademico?.errors && tituloAcademico?.touched">
+                <p *ngIf="tituloAcademico?.hasError('required')" class="text-danger">
+                    Se requiere un titulo.
+                </p>
+            </div>
+
+            <!--CARRERA-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="carrera" [ngClass]="{'is-invalid': carreraAcademico?.errors && carreraAcademico?.touched,
+            'is-valid': !carreraAcademico?.errors && carreraAcademico?.touched}" class="form-control input_user"
+                    placeholder="carrera">
+            </div>
+            <div *ngIf="carreraAcademico?.errors && carreraAcademico?.touched">
+                <p *ngIf="carreraAcademico?.hasError('required')" class="text-danger">
+                    Se requiere una carrera.
+                </p>
+            </div>
+
+            <!--ESCUELA-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="escuela" [ngClass]="{'is-invalid': escuelaAcademico?.errors && escuelaAcademico?.touched,
+            'is-valid': !escuelaAcademico?.errors && escuelaAcademico?.touched}" class="form-control input_user"
+                    placeholder="escuela">
+            </div>
+            <div *ngIf="escuelaAcademico?.errors && escuelaAcademico?.touched">
+                <p *ngIf="escuelaAcademico?.hasError('required')" class="text-danger">
+                    Se requiere una escuela.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!--INICIO-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="inicio" [ngClass]="{'is-invalid': inicioAcademico?.errors && inicioAcademico?.touched, 
+                'is-valid': !inicioAcademico?.errors && inicioAcademico?.touched}" class="form-control input_pass"
+                            placeholder="inicio">
+                    </div>
+                    <div *ngIf="inicioAcademico?.errors && inicioAcademico?.touched">
+                        <p *ngIf="inicioAcademico?.hasError('required')" class="text-danger">
+                            Se requiere una fecha de inicio.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--FIN-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="fin" [ngClass]="{'is-invalid': finAcademico?.errors && finAcademico?.touched, 
+                'is-valid': !finAcademico?.errors && finAcademico?.touched}" class="form-control input_pass"
+                            placeholder="fin">
+                    </div>
+                    <div *ngIf="finAcademico?.errors && finAcademico?.touched">
+                        <p *ngIf="finAcademico?.hasError('required')" class="text-danger">
+                            Se requiere un fecha de finalizacion.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--PUNTAJE-->
+                    <div class="input-group mb-2">
+                        <input type="number" formControlName="puntaje" [ngClass]="{'is-invalid': puntajeAcademico?.errors && puntajeAcademico?.touched, 
+                'is-valid': !puntajeAcademico?.errors && puntajeAcademico?.touched}" class="form-control input_pass" placeholder="duracion">
+                    </div>
+                    <div *ngIf="puntajeAcademico?.errors && puntajeAcademico?.touched">
+                        <p *ngIf="puntajeAcademico?.hasError('required')" class="text-danger">
+                            Se requiere un puntaje.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!--IMAGEN-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="imagen" [ngClass]="{'is-invalid': imagenAcademico?.errors && imagenAcademico?.touched, 
+                'is-valid': !imagenAcademico?.errors && imagenAcademico?.touched}" class="form-control input_pass"
+                    placeholder="imagen">
+            </div>
+            <div *ngIf="imagenAcademico?.errors && imagenAcademico?.touched">
+                <p *ngIf="imagenAcademico?.hasError('required')" class="text-danger">
+                    Se requiere una imagen.
+                </p>
+            </div>
+
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!formAca.valid">Modificar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="aca_delete">
+    <!--<div class="modal_top">-->
+    <div class="modal_container_exp_delete">
+        <h2 class="modal_titulo">Seguro que desea eliminar "{{ta}}"?</h2>
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <button type="button" class="modal_ingresar m-2" (click)="onDeleteAca($event)">Confirmar</button>
+            <button type="button" class="modal_close m-2" (click)="onClose($event)">Cancelar</button>
+        </div>
+    </div>
+</div>
+<div class="aca_nueva">
+    <div class="modal_container_exp">
+        <h2 class="modal_titulo">Nuevo registro de educacion</h2>
+        <form action="submit" class="modal_form" [formGroup]="formAca" (ngSubmit)="onNuevaAca($event)">
+            <!--TITULO-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="titulo" [ngClass]="{'is-invalid': tituloAcademico?.errors && tituloAcademico?.touched,
+            'is-valid': !tituloAcademico?.errors && tituloAcademico?.touched}" class="form-control input_user"
+                    placeholder="titulo">
+            </div>
+            <div *ngIf="tituloAcademico?.errors && tituloAcademico?.touched">
+                <p *ngIf="tituloAcademico?.hasError('required')" class="text-danger">
+                    Se requiere un titulo.
+                </p>
+            </div>
+
+            <!--CARRERA-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="carrera" [ngClass]="{'is-invalid': carreraAcademico?.errors && carreraAcademico?.touched,
+            'is-valid': !carreraAcademico?.errors && carreraAcademico?.touched}" class="form-control input_user"
+                    placeholder="carrera">
+            </div>
+            <div *ngIf="carreraAcademico?.errors && carreraAcademico?.touched">
+                <p *ngIf="carreraAcademico?.hasError('required')" class="text-danger">
+                    Se requiere una carrera.
+                </p>
+            </div>
+
+            <!--ESCUELA-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="escuela" [ngClass]="{'is-invalid': escuelaAcademico?.errors && escuelaAcademico?.touched,
+            'is-valid': !escuelaAcademico?.errors && escuelaAcademico?.touched}" class="form-control input_user"
+                    placeholder="escuela">
+            </div>
+            <div *ngIf="escuelaAcademico?.errors && escuelaAcademico?.touched">
+                <p *ngIf="escuelaAcademico?.hasError('required')" class="text-danger">
+                    Se requiere una escuela.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!--INICIO-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="inicio" [ngClass]="{'is-invalid': inicioAcademico?.errors && inicioAcademico?.touched, 
+                'is-valid': !inicioAcademico?.errors && inicioAcademico?.touched}" class="form-control input_pass"
+                            placeholder="inicio">
+                    </div>
+                    <div *ngIf="inicioAcademico?.errors && inicioAcademico?.touched">
+                        <p *ngIf="inicioAcademico?.hasError('required')" class="text-danger">
+                            Se requiere una fecha de inicio.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--FIN-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="fin" [ngClass]="{'is-invalid': finAcademico?.errors && finAcademico?.touched, 
+                'is-valid': !finAcademico?.errors && finAcademico?.touched}" class="form-control input_pass"
+                            placeholder="fin">
+                    </div>
+                    <div *ngIf="finAcademico?.errors && finAcademico?.touched">
+                        <p *ngIf="finAcademico?.hasError('required')" class="text-danger">
+                            Se requiere un fecha de finalizacion.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--PUNTAJE-->
+                    <div class="input-group mb-2">
+                        <input type="number" formControlName="puntaje" [ngClass]="{'is-invalid': puntajeAcademico?.errors && puntajeAcademico?.touched, 
+                'is-valid': !puntajeAcademico?.errors && puntajeAcademico?.touched}" class="form-control input_pass" placeholder="duracion">
+                    </div>
+                    <div *ngIf="puntajeAcademico?.errors && puntajeAcademico?.touched">
+                        <p *ngIf="puntajeAcademico?.hasError('required')" class="text-danger">
+                            Se requiere un puntaje.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!--IMAGEN-->
+            <div class="input-group mb-2">
+                <input type="text" formControlName="imagen" [ngClass]="{'is-invalid': imagenAcademico?.errors && imagenAcademico?.touched, 
+                'is-valid': !imagenAcademico?.errors && imagenAcademico?.touched}" class="form-control input_pass"
+                    placeholder="imagen">
+            </div>
+            <div *ngIf="imagenAcademico?.errors && imagenAcademico?.touched">
+                <p *ngIf="imagenAcademico?.hasError('required')" class="text-danger">
+                    Se requiere una imagen.
+                </p>
+            </div>
+
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!formAca.valid">Guardar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
     </div>
 </div>
