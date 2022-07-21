@@ -18,7 +18,6 @@ export class ExperienciaComponent implements OnInit {
   ida: number;
   t: string;
   ta: string;
-  url = 'http://localhost:8080/';
 
   constructor(
     private datosPorfolio: PorfolioService,

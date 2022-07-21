@@ -2,7 +2,7 @@
 <div class="card mat-card">
     <div class="card-titles">
         <h2>Hard Skills & Soft Skills</h2>
-        <div id="btn-add" *ngIf="usuarioJson.dni != 1">
+        <div id="btn-add" *ngIf="usuarioJson.dni != '1'">
             <a type="button" style="color: rgb(46, 152, 250)"><i class="bi bi-plus-square-dotted"
                     (click)="onNuevo($event)"></i></a>
         </div>
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-1 btn-edit-ajust" *ngIf="usuarioJson.dni != 1">
+            <div class="col-1 btn-edit-ajust" *ngIf="usuarioJson.dni != '1'">
                 <div class="cont cont-buttons">
                     <!--BOTONES-->
                     <div id="btn-edit"><a type="button" style="color: rgb(46, 152, 250)" class="btn-right"

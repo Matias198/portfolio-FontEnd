@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import { Router } from '@angular/router';
-import { AutenticationService } from 'src/app/servicios/autentication.service';
-import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-encabezado',
@@ -18,8 +16,7 @@ export class EncabezadoComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private datosPorfolio: PorfolioService,
-    private ruta: Router,
-    private autenticationService: AutenticationService
+    private ruta: Router
   ) {
     this.form = this.formBuilder.group({
       dni: ['', [Validators.required]],

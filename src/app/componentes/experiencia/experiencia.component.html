@@ -3,7 +3,7 @@
     <div>
         <div class="card-titles">
             <h2>Experiencia</h2>
-            <div id="btn-add" *ngIf="usuarioJson.dni != 1">
+            <div id="btn-add" *ngIf="usuarioJson.dni != '1'">
                 <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onNuevoE($event)"><i
                         class="bi bi-plus-square-dotted"></i></a>
             </div>
@@ -21,7 +21,7 @@
                 <p class="p-anio">{{experience.desde}} - {{experience.hasta}} - {{experience.duracion}}</p>
                 <p class="p-lugar">{{experience.ciudad}} - {{experience.provincia}}, {{experience.pais}}</p>
             </div>
-            <div class="cont cont-buttons" *ngIf="usuarioJson.dni != 1">
+            <div class="cont cont-buttons" *ngIf="usuarioJson.dni != '1'">
                 <!--BOTONES-->
                 <div id="btn-edit"><a type="button" style="color: rgb(46, 152, 250)" class="btn-right"
                         (click)="onEditExp(experience)">
@@ -39,7 +39,7 @@
     <div>
         <div class="card-titles">
             <h2>Educacion</h2>
-            <div id="btn-add" *ngIf="usuarioJson.dni != 1">
+            <div id="btn-add" *ngIf="usuarioJson.dni != '1'">
                 <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onNuevoA($event)"><i
                         class="bi bi-plus-square-dotted"></i></a>
             </div>

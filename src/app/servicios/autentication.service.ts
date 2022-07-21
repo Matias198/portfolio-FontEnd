@@ -4,30 +4,32 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AutenticationService {
-  //url="https://porfolio-matias-fernandez.herokuapp.com/auth/login";
-  url = "http://localhost:8080/auth/login"
-  currentUserSubject:BehaviorSubject<any>;
-  public variable:any
+  url = 'https://porfolio-matias-fernandez.herokuapp.com/';
+  
+  currentUserSubject: BehaviorSubject<any>;
+  public variable: any;
 
-  constructor(private http:HttpClient) { 
-    console.log("El servicio de autenticacion esta corriendo");
-    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem('currentUser')||'{}'));
-  } 
-
-  IniciarSesion(credenciales:any):Observable<any>{
-    return this.http.post(this.url, credenciales).pipe(map(data => {
-      sessionStorage.setItem('currentUser', JSON.stringify(data))
-      this.currentUserSubject.next(data)
-      return data;
-    }))
+  constructor(private http: HttpClient) {
+    console.log('El servicio de autenticacion esta corriendo');
+    this.currentUserSubject = new BehaviorSubject<any>(
+      JSON.parse(sessionStorage.getItem('currentUser') || '{}')
+    );
   }
 
-
-  get usuarioAutenticado(){
-    return this.currentUserSubject.value
+  IniciarSesion(credenciales: any): Observable<any> {
+    return this.http.post(this.url, credenciales).pipe(
+      map((data) => {
+        sessionStorage.setItem('currentUser', JSON.stringify(data));
+        this.currentUserSubject.next(data);
+        return data;
+      })
+    );
   }
 
+  get usuarioAutenticado() {
+    return this.currentUserSubject.value;
+  }
 }

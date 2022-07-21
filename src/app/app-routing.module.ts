@@ -5,14 +5,13 @@ import { PortfolioComponent } from './componentes/portfolio/portfolio.component'
 import { GuardGuard } from './servicios/guard.guard';
 
 const routes: Routes = [
+  {path:'', redirectTo:'iniciar-sesion', pathMatch:'full'},
   {path:'portfolio', component:PortfolioComponent, canActivate:[GuardGuard]},
-  {path:'iniciar-sesion', component:IniciarSesionComponent},
-  {path:'', redirectTo:'iniciar-sesion', pathMatch:'full'}
-
+  {path:'iniciar-sesion', component:IniciarSesionComponent}
 ]; 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  exports: [RouterModule] 
 })
 export class AppRoutingModule { }

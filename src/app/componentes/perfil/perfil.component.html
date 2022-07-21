@@ -4,7 +4,7 @@
     <div id="info" style="padding: 16px">
         <div>
             <img class="profile-image" src="{{miPorfolio.image_perfil}}">
-            <div id="btn-edit" *ngIf="usuarioJson.dni != 1">
+            <div id="btn-edit" *ngIf="usuarioJson.dni != '1'">
                 <a type="button" style="color: rgb(46, 152, 250)" class="btn-right"><i class="bi bi-pencil-square"></i></a>
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div id="info-actions">
             <button class="btn btn-primary" type="button">Tengo interés en</button>
             <button class="btn btn-light" type="button" id="btn-edit" 
-            *ngIf="usuarioJson.dni != 1" (click)="onNuevo($event)">Añadir Sección</button>
+            *ngIf="usuarioJson.dni != '1'" (click)="onNuevo($event)">Añadir Sección</button>
             <button class="btn btn-light" type="button">Más</button>
         </div>
     </div>
@@ -43,7 +43,7 @@
     <div class="card mat-card" *ngFor="let acercade of acercaDeList">
         <div class="card-titles">
             <h2>{{acercade.titulo}}</h2>
-            <div class="cont cont-buttons" *ngIf="usuarioJson.dni != 1">
+            <div class="cont cont-buttons" *ngIf="usuarioJson.dni != '1'">
                 <div id="btn-edit">
                     <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEdit(acercade)">
                         <i class="bi bi-pencil-square"></i>
