@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AutenticationService {
-  url = 'https://porfolio-matias-fernandez.herokuapp.com/';
+  url = 'https://porfolio-matias-fernandez.herokuapp.com/auth/login';
 
   currentUserSubject: BehaviorSubject<any>;
 
@@ -19,8 +19,8 @@ export class AutenticationService {
   }
 
   IniciarSesion(credenciales: any): Observable<any> {
-        return this.http.post(this.url, credenciales).pipe(
-      map((data) => {
+    console.log("iniciando sesion")
+        return this.http.post(this.url, credenciales).pipe(map((data) => {
         sessionStorage.setItem('currentUser', JSON.stringify(data));
         this.currentUserSubject.next(data);
         return data;

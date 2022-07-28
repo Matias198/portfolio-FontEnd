@@ -11,6 +11,19 @@
   pointer-events: none;
 }
 
+.perfil_edit{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #111111bd;
+  z-index: 1;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .acercade_delete{
   position: fixed;
   top: 0;
@@ -49,6 +62,20 @@
   display: grid;
   gap: 1em;
   place-items: center;
+  grid-auto-columns: 100%;
+}
+
+.modal_container_perfil{
+  margin: auto;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90%;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 3em 2.5em;
+  display: grid;
+  gap: 1em;
+  place-items: fixed;
   grid-auto-columns: 100%;
 }
 

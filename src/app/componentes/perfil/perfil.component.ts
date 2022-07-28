@@ -12,6 +12,7 @@ export class PerfilComponent implements OnInit {
   miPorfolio: any;
   usuarioJson: any;
   form: FormGroup;
+  formPerfil: FormGroup;
   acercaDeList: any;
   id: number;
   t: string;
@@ -25,6 +26,16 @@ export class PerfilComponent implements OnInit {
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
     });
+    this.formPerfil = this.formBuilder.group({
+      nombres: ['', Validators.required],
+      apellido: ['', Validators.required],
+      fecha_nacimiento: ['', Validators.required],
+      nacionalidad: ['', Validators.required],
+      mail: ['', Validators.required],
+      ocupacion: ['', Validators.required],
+      image_background: ['', Validators.required],
+      image_perfil: ['', Validators.required]
+    })
     this.usuarioJson = JSON.parse(
       sessionStorage.getItem('currentUser') || '{}'
     );
@@ -40,6 +51,49 @@ export class PerfilComponent implements OnInit {
     return this.form.get('descripcion');
   }
 
+  get nombres() {
+    return this.form.get('nombres');
+  }
+  get apellido() {
+    return this.form.get('apellido');
+  }
+  get fecha_nacimiento() {
+    return this.form.get('fecha_nacimiento');
+  }
+  get nacionalidad() {
+    return this.form.get('nacionalidad');
+  }
+  get mail() {
+    return this.form.get('mail');
+  }
+  get ocupacion() {
+    return this.form.get('ocupacion');
+  }
+  get image_background() {
+    return this.form.get('image_background');
+  }
+  get image_perfil() {
+    return this.form.get('image_perfil');
+  }
+
+  onEnviarPerfil(event: Event){
+    event.preventDefault;
+    let credenciales = this.formPerfil.value;
+    let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+    this.abmService
+      .Modificacion(credenciales, 'persona', 1, usuarioJson.dni)
+      .subscribe((data2) => {
+        this.datosPorfolio.obtenerDatos().subscribe((data) => {
+          const obj = JSON.parse(JSON.stringify(data));
+          this.miPorfolio = obj;
+        });
+        this.formPerfil.reset;
+        console.log(data2);
+        this.onClose(event);
+      });
+  }
+
+
   ngOnInit(): void {
     this.datosPorfolio.obtenerDatos().subscribe((data) => {
       const obj = JSON.parse(JSON.stringify(data));
@@ -48,6 +102,13 @@ export class PerfilComponent implements OnInit {
       array.sort((a: any, b: any) => a.idSeccion - b.idSeccion);
       this.acercaDeList = array;
     });
+  }
+
+  onEditarPerfil(event: Event) {
+    event.preventDefault;
+    this.formPerfil.reset;
+    const elemento = document.querySelector('.perfil_edit');
+    elemento?.classList.add('modal--show');
   }
 
   onNuevo(event: Event) {
@@ -85,6 +146,8 @@ export class PerfilComponent implements OnInit {
     elemento = document.querySelector('.acercade_delete');
     elemento?.classList.remove('modal--show');
     elemento = document.querySelector('.acercade_nuevo');
+    elemento?.classList.remove('modal--show');
+    elemento = document.querySelector('.perfil_edit');
     elemento?.classList.remove('modal--show');
   }
 

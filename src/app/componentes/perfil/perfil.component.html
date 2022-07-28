@@ -5,7 +5,8 @@
         <div>
             <img class="profile-image" src="{{miPorfolio.image_perfil}}">
             <div id="btn-edit" *ngIf="usuarioJson.dni != '1'">
-                <a type="button" style="color: rgb(46, 152, 250)" class="btn-right"><i class="bi bi-pencil-square"></i></a>
+                <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEditarPerfil($event)">
+                    <i class="bi bi-pencil-square"></i></a>
             </div>
         </div>
         <div id="info-data">
@@ -14,7 +15,7 @@
                 <div id="info-persona">{{miPorfolio.ocupacion}}</div>
                 <div>
                     <span id="info-lugar">{{miPorfolio.nacionalidad}} </span>
-                    <span><a type="button" style="color: rgb(46, 152, 250)" id="info-contacto">Informacion de contacto</a></span>
+                    <span><a href="mailto:{{miPorfolio.mail}}" style="color: rgb(46, 152, 250)" id="info-contacto">{{miPorfolio.mail}}</a></span>
                 </div>
             </div>
             <div id="info-academyc">
@@ -31,13 +32,133 @@
             </div>
         </div> 
         <div id="info-actions">
-            <button class="btn btn-primary" type="button">Tengo interés en</button>
-            <button class="btn btn-light" type="button" id="btn-edit" 
+            <button class="btn btn-primary" type="button" id="btn-edit" 
             *ngIf="usuarioJson.dni != '1'" (click)="onNuevo($event)">Añadir Sección</button>
-            <button class="btn btn-light" type="button">Más</button>
         </div>
     </div>
 </div>
+<div class="perfil_edit">
+    <div class="modal_container_perfil">
+        <h2 class="modal_titulo">Editar perfil</h2>
+        <form action="submit" class="modal_form" [formGroup]="formPerfil" (ngSubmit)="onEnviarPerfil($event)">
+            
+            <div class="row">
+                <div class="col">
+                    <!--NOMBRE-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="nombres" [ngClass]="{'is-invalid': nombres?.errors && nombres?.touched, 
+                'is-valid': !nombres?.errors && nombres?.touched}"
+                            class="form-control input_pass" placeholder="nombres">
+                    </div>
+                    <div *ngIf="nombres?.errors && nombres?.touched">
+                        <p *ngIf="nombres?.hasError('required')" class="text-danger">
+                            Se requiere un nombre.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--APELLIDO-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="apellido" [ngClass]="{'is-invalid': apellido?.errors && apellido?.touched, 
+                'is-valid': !apellido?.errors && apellido?.touched}" class="form-control input_pass"
+                            placeholder="apellido">
+                    </div>
+                    <div *ngIf="apellido?.errors && apellido?.touched">
+                        <p *ngIf="apellido?.hasError('required')" class="text-danger">
+                            Se requiere un apellido.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--FECHA DE NACIMIENTO-->
+                    <div class="input-group mb-2">
+                        <input type="date" formControlName="fecha_nacimiento" [ngClass]="{'is-invalid': fecha_nacimiento?.errors && fecha_nacimiento?.touched, 
+                'is-valid': !fecha_nacimiento?.errors && fecha_nacimiento?.touched}" class="form-control input_pass"
+                            placeholder="fecha de nacimiento">
+                    </div>
+                    <div *ngIf="fecha_nacimiento?.errors && fecha_nacimiento?.touched">
+                        <p *ngIf="fecha_nacimiento?.hasError('required')" class="text-danger">
+                            Se requiere una fecha de nacimiento.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!--NACIONALIDAD-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="nacionalidad" [ngClass]="{'is-invalid': nacionalidad?.errors && nacionalidad?.touched, 
+                'is-valid': !nacionalidad?.errors && nacionalidad?.touched}" class="form-control input_pass"
+                            placeholder="nacionalidad">
+                    </div>
+                    <div *ngIf="nacionalidad?.errors && nacionalidad?.touched">
+                        <p *ngIf="nacionalidad?.hasError('required')" class="text-danger">
+                            Se requiere una nacionalidad.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--MAIL-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="mail" [ngClass]="{'is-invalid': mail?.errors && mail?.touched, 
+                'is-valid': !mail?.errors && mail?.touched}" class="form-control input_pass"
+                            placeholder="mail">
+                    </div>
+                    <div *ngIf="mail?.errors && mail?.touched">
+                        <p *ngIf="mail?.hasError('required')" class="text-danger">
+                            Se requiere un mail.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--OCUPACION-->
+                    <div class="input-group mb-2">
+                        <input type="text" formControlName="ocupacion" [ngClass]="{'is-invalid': ocupacion?.errors && ocupacion?.touched, 
+                'is-valid': !ocupacion?.errors && ocupacion?.touched}"
+                            class="form-control input_pass" placeholder="ocupacion">
+                    </div>
+                    <div *ngIf="ocupacion?.errors && ocupacion?.touched">
+                        <p *ngIf="ocupacion?.hasError('required')" class="text-danger">
+                            Se requiere una ocupacion.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!--IMAGEN DE PERFIL-->
+            <div class="input-group mb-3">
+                <input type="text" formControlName="image_perfil" [ngClass]="{'is-invalid': image_perfil?.errors && image_perfil?.touched,
+                    'is-valid': !image_perfil?.errors && image_perfil?.touched}" class="form-control input_user"
+                    placeholder="link de imagen de perfil">
+            </div>
+            <div *ngIf="image_perfil?.errors && image_perfil?.touched">
+                <p *ngIf="image_perfil?.hasError('required')" class="text-danger">
+                    Se requiere una imagen de perfil.
+                </p>
+            </div>
+
+            <!--IMAGEN DE BANNER-->
+            <div class="input-group mb-3">
+                <input type="text" formControlName="image_background" [ngClass]="{'is-invalid': image_background?.errors && image_background?.touched,
+                    'is-valid': !image_background?.errors && image_background?.touched}" class="form-control input_user"
+                    placeholder="link de imagen de banner">
+            </div>
+            <div *ngIf="image_background?.errors && image_background?.touched">
+                <p *ngIf="image_background?.hasError('required')" class="text-danger">
+                    Se requiere una imagen de banner.
+                </p>
+            </div>
+
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="submit" class="modal_ingresar m-2" [disabled]="!formPerfil.valid">Modificar</button>
+                <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <!--#ACERCA DE:-->
 <div>
     <div class="card mat-card" *ngFor="let acercade of acercaDeList">

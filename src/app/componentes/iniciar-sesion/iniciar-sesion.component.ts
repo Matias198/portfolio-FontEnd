@@ -38,6 +38,7 @@ export class IniciarSesionComponent implements OnInit {
 
   onEnviar(event: Event) {
     event.preventDefault;
+    console.log(this.form.value);
     this.autenticationService
       .IniciarSesion(this.form.value)
       .subscribe((data) => {
