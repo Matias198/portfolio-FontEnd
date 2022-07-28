@@ -18,7 +18,7 @@ export class IniciarSesionComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       dni: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
     this.formGuest = this.formBuilder.group({
       dni: [1],
