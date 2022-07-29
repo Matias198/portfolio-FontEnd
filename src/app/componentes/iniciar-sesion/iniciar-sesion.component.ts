@@ -26,7 +26,9 @@ export class IniciarSesionComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    window.sessionStorage.clear();
+  }
 
   get dni() {
     return this.form.get('dni');

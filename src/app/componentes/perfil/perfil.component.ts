@@ -107,6 +107,14 @@ export class PerfilComponent implements OnInit {
   onEditarPerfil(event: Event) {
     event.preventDefault;
     this.formPerfil.reset;
+    this.formPerfil.controls['nombres'].setValue(this.miPorfolio.nombres);
+    this.formPerfil.controls['apellido'].setValue(this.miPorfolio.apellido);
+    this.formPerfil.controls['fecha_nacimiento'].setValue(this.miPorfolio.fecha_nacimiento);
+    this.formPerfil.controls['nacionalidad'].setValue(this.miPorfolio.nacionalidad);
+    this.formPerfil.controls['mail'].setValue(this.miPorfolio.mail);
+    this.formPerfil.controls['ocupacion'].setValue(this.miPorfolio.ocupacion);
+    this.formPerfil.controls['image_background'].setValue(this.miPorfolio.image_background);
+    this.formPerfil.controls['image_perfil'].setValue(this.miPorfolio.image_perfil);
     const elemento = document.querySelector('.perfil_edit');
     elemento?.classList.add('modal--show');
   }
