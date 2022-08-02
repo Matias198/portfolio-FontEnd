@@ -15,10 +15,11 @@
                 <div id="info-persona">{{miPorfolio.ocupacion}}</div>
                 <div>
                     <span id="info-lugar">{{miPorfolio.nacionalidad}} </span>
-                    <span><a href="mailto:{{miPorfolio.mail}}" style="color: rgb(46, 152, 250)" id="info-contacto">{{miPorfolio.mail}}</a></span>
+                    <span><a href="mailto:{{miPorfolio.mail}}" style="color: rgb(46, 152, 250)"
+                            id="info-contacto">{{miPorfolio.mail}}</a></span>
                 </div>
             </div>
-            <div id="info-academyc">
+            <div id="info-academyc" class="d-none d-lg-block">
                 <ul id="info-details">
                     <li><a href="{{miPorfolio.compania.url}}" target="_blank">
                             <img class="img-li" src="{{miPorfolio.compania.imagen}}">
@@ -30,10 +31,10 @@
                         </a></li>
                 </ul>
             </div>
-        </div> 
+        </div>
         <div id="info-actions">
-            <button class="btn btn-primary" type="button" id="btn-edit" 
-            *ngIf="usuarioJson.dni != '1'" (click)="onNuevo($event)">Añadir Sección</button>
+            <button class="btn btn-primary" type="button" id="btn-edit" *ngIf="usuarioJson.dni != '1'"
+                (click)="onNuevo($event)">Añadir Sección</button>
         </div>
     </div>
 </div>
@@ -41,14 +42,14 @@
     <div class="modal_container_perfil">
         <h2 class="modal_titulo">Editar perfil</h2>
         <form action="submit" class="modal_form" [formGroup]="formPerfil" (ngSubmit)="onEnviarPerfil($event)">
-            
+
             <div class="row">
                 <div class="col">
                     <!--NOMBRE-->
                     <div class="input-group mb-2">
                         <input type="text" formControlName="nombres" [ngClass]="{'is-invalid': nombres?.errors && nombres?.touched, 
-                'is-valid': !nombres?.errors && nombres?.touched}"
-                            class="form-control input_pass" placeholder="nombres">
+                'is-valid': !nombres?.errors && nombres?.touched}" class="form-control input_pass"
+                            placeholder="nombres">
                     </div>
                     <div *ngIf="nombres?.errors && nombres?.touched">
                         <p *ngIf="nombres?.hasError('required')" class="text-danger">
@@ -102,8 +103,7 @@
                     <!--MAIL-->
                     <div class="input-group mb-2">
                         <input type="text" formControlName="mail" [ngClass]="{'is-invalid': mail?.errors && mail?.touched, 
-                'is-valid': !mail?.errors && mail?.touched}" class="form-control input_pass"
-                            placeholder="mail">
+                'is-valid': !mail?.errors && mail?.touched}" class="form-control input_pass" placeholder="mail">
                     </div>
                     <div *ngIf="mail?.errors && mail?.touched">
                         <p *ngIf="mail?.hasError('required')" class="text-danger">
@@ -115,8 +115,8 @@
                     <!--OCUPACION-->
                     <div class="input-group mb-2">
                         <input type="text" formControlName="ocupacion" [ngClass]="{'is-invalid': ocupacion?.errors && ocupacion?.touched, 
-                'is-valid': !ocupacion?.errors && ocupacion?.touched}"
-                            class="form-control input_pass" placeholder="ocupacion">
+                'is-valid': !ocupacion?.errors && ocupacion?.touched}" class="form-control input_pass"
+                            placeholder="ocupacion">
                     </div>
                     <div *ngIf="ocupacion?.errors && ocupacion?.touched">
                         <p *ngIf="ocupacion?.hasError('required')" class="text-danger">
@@ -141,8 +141,8 @@
             <!--IMAGEN DE BANNER-->
             <div class="input-group mb-3">
                 <input type="text" formControlName="image_background" [ngClass]="{'is-invalid': image_background?.errors && image_background?.touched,
-                    'is-valid': !image_background?.errors && image_background?.touched}" class="form-control input_user"
-                    placeholder="link de imagen de banner">
+                    'is-valid': !image_background?.errors && image_background?.touched}"
+                    class="form-control input_user" placeholder="link de imagen de banner">
             </div>
             <div *ngIf="image_background?.errors && image_background?.touched">
                 <p *ngIf="image_background?.hasError('required')" class="text-danger">
@@ -202,8 +202,8 @@
             </div>
             <div class="input-group mb-2">
                 <input type="text" formControlName="descripcion" [ngClass]="{'is-invalid': descripcion?.errors && descripcion?.touched, 
-                'is-valid': !descripcion?.errors && descripcion?.touched}"
-                    class="form-control input_pass" placeholder="descripcion">
+                'is-valid': !descripcion?.errors && descripcion?.touched}" class="form-control input_pass"
+                    placeholder="descripcion">
             </div>
             <div *ngIf="descripcion?.errors && descripcion?.touched">
                 <p *ngIf="descripcion?.hasError('required')" class="text-danger">
@@ -249,8 +249,8 @@
             </div>
             <div class="input-group mb-2">
                 <input type="text" formControlName="descripcion" [ngClass]="{'is-invalid': descripcion?.errors && descripcion?.touched, 
-                'is-valid': !descripcion?.errors && descripcion?.touched}"
-                    class="form-control input_pass" placeholder="descripcion">
+                'is-valid': !descripcion?.errors && descripcion?.touched}" class="form-control input_pass"
+                    placeholder="descripcion">
             </div>
             <div *ngIf="descripcion?.errors && descripcion?.touched">
                 <p *ngIf="descripcion?.hasError('required')" class="text-danger">
