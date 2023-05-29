@@ -6,8 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PorfolioService {
-  url = 'https://porfolio-matias-fernandez.herokuapp.com/';
-
+  //url = 'https://porfolio-matias-fernandez.herokuapp.com/';
+  url = 'https://portfolio-backend-production-0074.up.railway.app/'
+  
   constructor(private http: HttpClient) {}
 
   obtenerDatos(): Observable<any> {

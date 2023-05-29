@@ -7,8 +7,9 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AbmService {
-  url = 'https://porfolio-matias-fernandez.herokuapp.com/';
-
+  //url = 'https://porfolio-matias-fernandez.herokuapp.com/';
+  url = 'https://portfolio-backend-production-0074.up.railway.app/'
+  
   constructor(private http: HttpClient) {
     console.log('El servicio de ABM esta corriendo');
   }

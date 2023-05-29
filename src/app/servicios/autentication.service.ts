@@ -7,8 +7,9 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AutenticationService {
-  url = 'https://porfolio-matias-fernandez.herokuapp.com/auth/login';
-
+  //url = 'https://porfolio-matias-fernandez.herokuapp.com/auth/login';
+  url = 'https://portfolio-backend-production-0074.up.railway.app/auth/login';
+  
   currentUserSubject: BehaviorSubject<any>;
 
   constructor(private http: HttpClient) {
