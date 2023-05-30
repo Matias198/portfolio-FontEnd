@@ -43,7 +43,7 @@ export class EncabezadoComponent implements OnInit {
 
   onCerrarSesion(event: Event){
     event.preventDefault;
-    window.sessionStorage.clear();
+    console.log('redireccionando al login') 
     this.ruta.navigate(['iniciar-sesion']);
   }
 
