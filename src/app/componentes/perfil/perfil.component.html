@@ -1,6 +1,6 @@
 <!--#DATOS DEL PERFIL:-->
 <div class="card mat-card" id="first-card">
-    <div id="profile-background"><img src="{{miPorfolio.image_background}}"></div>
+    <div id="profile-background"><img src="{{miPorfolio.image_background}}" style="min-height: 250px ;max-height: 250px;"></div>
     <div id="info" style="padding: 16px">
         <div>
             <img class="profile-image" src="{{miPorfolio.image_perfil}}">
@@ -10,12 +10,12 @@
             </div>
         </div>
         <div id="info-data">
-            <div id="div-data">
+            <div class="mt-3" id="div-data">
                 <h1 id="nombreUsuario">{{miPorfolio.nombres}} {{miPorfolio.apellido}}</h1>
                 <div id="info-persona">{{miPorfolio.ocupacion}}</div>
                 <div>
                     <span id="info-lugar">{{miPorfolio.nacionalidad}} </span>
-                    <span><a href="mailto:{{miPorfolio.mail}}" style="color: rgb(46, 152, 250)"
+                    <span>. Contacto: <a href="mailto:{{miPorfolio.mail}}" style="color: rgb(46, 152, 250)"
                             id="info-contacto">{{miPorfolio.mail}}</a></span>
                 </div>
             </div>
