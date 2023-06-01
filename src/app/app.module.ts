@@ -35,8 +35,7 @@ import { AlertModule } from '@full-fledged/alerts';
     HttpClientModule,
     ReactiveFormsModule,
     NgxLoadingModule.forRoot({}), 
-    BrowserAnimationsModule,
-    BrowserModule,
+    BrowserAnimationsModule, 
     AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right', positionY: 'bottom'})
   ],
   providers: [

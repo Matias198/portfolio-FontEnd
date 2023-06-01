@@ -8,7 +8,7 @@
     [template]="customLoadingTemplate"
 ></ngx-loading>
 
-<div *ngIf="!loading" id="main-div" [hidden]="loading">
+<div *ngIf="!loading" [hidden]="loading">
     <app-encabezado [usuario]="usuario"></app-encabezado>
     <app-perfil [usuario]="usuario"></app-perfil>
     <app-experiencia [usuario]="usuario"></app-experiencia>

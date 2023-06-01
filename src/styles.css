@@ -104,9 +104,9 @@ h2 {
 }
 
 div#card-containers div {
-  display: inline-block;
+  display: inline-block!important;
 }
-
+ 
 .img-exp {
   width: 100px;
   height: 100px;
