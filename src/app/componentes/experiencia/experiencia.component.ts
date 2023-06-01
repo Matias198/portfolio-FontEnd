@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core'; 
+import { FormBuilder } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { AbmService } from 'src/app/servicios/abm.service';
+import { AutenticationService } from 'src/app/servicios/autentication.service';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import Swal from 'sweetalert2';
 
@@ -13,13 +15,11 @@ export class ExperienciaComponent implements OnInit {
 
   @Input()usuario:any;
 
-  public loading = false;
-  educationList: any;
-  experienceList: any;
-  usuarioJson: any;
+  public loading = false; 
 
-  formExp: UntypedFormGroup;
-  formAca: UntypedFormGroup;
+  usuarioJson:any
+  formExp: FormGroup;
+  formAca: FormGroup;
   id: number;
   ida: number;
   t: string;
@@ -27,8 +27,9 @@ export class ExperienciaComponent implements OnInit {
 
   constructor(
     private datosPorfolio: PorfolioService,
-    private formBuilder: UntypedFormBuilder,
-    private abmService: AbmService
+    private formBuilder: FormBuilder,
+    private abmService: AbmService,
+    private autenticationService: AutenticationService
   ) {
     this.formExp = this.formBuilder.group({
       titulo: ['', Validators.required],
@@ -157,18 +158,15 @@ export class ExperienciaComponent implements OnInit {
     this.abmService
       .Modificacion(credenciales, 'experiencia', this.id, this.usuario.dni)
       .subscribe((data2) => {
-        console.log(this.usuario)
         this.datosPorfolio.obtenerDatos().subscribe((data) => {
-          const obj = JSON.parse(JSON.stringify(data));
-          const array = obj.experiencias;
+          this.usuario = JSON.parse(JSON.stringify(data));
+          const array = this.usuario.experiencias;
           array.sort((a: any, b: any) => a.idExperiencia - b.idExperiencia);
-          this.experienceList = array;
-        });
-        this.formExp.reset;
-        console.log(data2);
-        this.onClose(event);
-        this.loading = false;
-        Swal.fire('OK', 'Se actualizaron los datos de la experiencia.', 'success')
+          this.usuario.experiencias = array;
+          this.onClose(event);
+          this.loading = false;
+          Swal.fire('OK', data2.mensaje, 'success')
+        });  
       }, (err)=>{ 
         this.loading = false;
         Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -185,18 +183,17 @@ export class ExperienciaComponent implements OnInit {
   onDeleteExp(event: Event) {
     event.preventDefault;
     this.loading = true;
-    this.abmService.Baja('experiencia', this.id).subscribe((data) => {
-      console.log(data);
+    this.abmService.Baja('experiencia', this.id)
+    .subscribe((data2) => { 
       this.datosPorfolio.obtenerDatos().subscribe((data) => {
-        const obj = JSON.parse(JSON.stringify(data));
-        const array = obj.experiencias;
+        this.usuario = JSON.parse(JSON.stringify(data));
+        const array = this.usuario.experiencias;
         array.sort((a: any, b: any) => a.idExperiencia - b.idExperiencia);
-        this.experienceList = array;
-      });
-      this.formExp.reset;
-      this.onClose(event);
-      this.loading = false;
-      Swal.fire('OK', 'Se eliminó la experiencia.', 'success')
+        this.usuario.experiencias = array;
+        this.onClose(event);
+        this.loading = false;
+        Swal.fire('OK', data2.mensaje, 'success')
+      }); 
     }, (err)=>{ 
       this.loading = false;
       Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -213,22 +210,19 @@ export class ExperienciaComponent implements OnInit {
   onNuevaExp(event: Event) {
     event.preventDefault;
     this.loading = true
-    let credenciales = this.formExp.value;
-    let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+    let credenciales = this.formExp.value; 
     this.abmService
-      .Alta(credenciales, 'experiencia', usuarioJson.dni)
+      .Alta(credenciales, 'experiencia', this.usuario.dni)
       .subscribe((data2) => {
         this.datosPorfolio.obtenerDatos().subscribe((data) => {
-          const obj = JSON.parse(JSON.stringify(data));
-          const array = obj.experiencias;
+          this.usuario = JSON.parse(JSON.stringify(data));
+          const array = this.usuario.experiencias;
           array.sort((a: any, b: any) => a.idExperiencia - b.idExperiencia);
-          this.experienceList = array;
-        });
-        this.formExp.reset;
-        console.log(data2);
-        this.onClose(event);
-        this.loading = false;
-        Swal.fire('OK', 'Se agregó una nueva experiencia.', 'success')
+          this.usuario.experiencias = array;
+          this.onClose(event);
+          this.loading = false;
+          Swal.fire('OK', data2.mensaje, 'success')
+        });  
       }, (err)=>{ 
         this.loading = false;
         Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -252,22 +246,19 @@ export class ExperienciaComponent implements OnInit {
   onEnviarAca(event: Event) {
     event.preventDefault;
     this.loading = true;
-    let credenciales = this.formAca.value;
-    let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+    let credenciales = this.formAca.value; 
     this.abmService
-      .Modificacion(credenciales, 'academico', this.ida, usuarioJson.dni)
+      .Modificacion(credenciales, 'academico', this.ida, this.usuario.dni)
       .subscribe((data2) => {
         this.datosPorfolio.obtenerDatos().subscribe((data) => {
-          const obj = JSON.parse(JSON.stringify(data));
-          const array2 = obj.academicos;
+          this.usuario = JSON.parse(JSON.stringify(data));
+          const array2 =  this.usuario.academicos;
           array2.sort((a: any, b: any) => a.idAcademico - b.idAcademico);
-          this.educationList = array2;
-        });
-        this.formAca.reset;
-        console.log(data2);
-        this.onClose(event);
-        this.loading = false;
-        Swal.fire('OK', 'Se actualizaron los datos academicos.', 'success')
+          this.usuario.academicos = array2;
+          this.onClose(event);
+          this.loading = false;
+          Swal.fire('OK', data2.mensaje, 'success')
+        });  
       }, (err)=>{ 
         this.loading = false;
         Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -284,18 +275,17 @@ export class ExperienciaComponent implements OnInit {
   onDeleteAca(event: Event) {
     event.preventDefault;
     this.loading = true;
-    this.abmService.Baja('academico', this.ida).subscribe((data) => {
-      console.log(data);
+    this.abmService.Baja('academico', this.ida)
+    .subscribe((data2) => { 
       this.datosPorfolio.obtenerDatos().subscribe((data) => {
-        const obj = JSON.parse(JSON.stringify(data));
-        const array2 = obj.academicos;
+        this.usuario = JSON.parse(JSON.stringify(data));
+        const array2 = this.usuario.academicos;
         array2.sort((a: any, b: any) => a.idAcademico - b.idAcademico);
-        this.educationList = array2;
-      });
-      this.formAca.reset;
-      this.onClose(event);
-      this.loading = false;
-      Swal.fire('OK', 'Se eliminó el academico.', 'success')
+        this.usuario.academicos = array2;
+        this.onClose(event);
+        this.loading = false;
+        Swal.fire('OK', data2.mensaje, 'success')
+      }); 
     }, (err)=>{ 
       this.loading = false;
       Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -312,38 +302,32 @@ export class ExperienciaComponent implements OnInit {
   onNuevaAca(event: Event) {
     event.preventDefault;
     this.loading = true
-    let credenciales = this.formAca.value;
-    let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+    let credenciales = this.formAca.value; 
     this.abmService
-      .Alta(credenciales, 'academico', usuarioJson.dni)
+      .Alta(credenciales, 'academico', this.usuario.dni)
       .subscribe((data2) => {
         this.datosPorfolio.obtenerDatos().subscribe((data) => {
-          const obj = JSON.parse(JSON.stringify(data));
-          const array2 = obj.academicos;
+          this.usuario = JSON.parse(JSON.stringify(data));
+          const array2 = this.usuario.academicos;
           array2.sort((a: any, b: any) => a.idAcademico - b.idAcademico);
-          this.educationList = array2;
-        });
-        this.formAca.reset;
-        console.log(data2);
-        this.onClose(event);
-        this.loading = false;
-        Swal.fire('OK', 'Se agregó un nuevo academico.', 'success')
+          this.usuario.academicos = array2;
+          this.onClose(event);
+          this.loading = false;
+          Swal.fire('OK', data2.mensaje, 'success')
+        }); 
       }, (err)=>{ 
         this.loading = false;
         Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
       });
   }
 
-  ngOnInit(): void {
-    this.datosPorfolio.obtenerDatos().subscribe((data) => {
-      const obj = JSON.parse(JSON.stringify(data));
-      this.educationList = obj.academicos; 
-      const array2 = obj.academicos;
-      array2.sort((a: any, b: any) => a.idAcademico - b.idAcademico);
-      this.educationList = array2; 
-      const array = obj.experiencias;
-      array.sort((a: any, b: any) => a.idExperiencia - b.idExperiencia);
-      this.experienceList = array;
-    });
+  ngOnInit(): void { 
+    const array2 = this.usuario.academicos;
+    array2.sort((a: any, b: any) => a.idAcademico - b.idAcademico);
+    this.usuario.academicos = array2; 
+    const array = this.usuario.experiencias;
+    array.sort((a: any, b: any) => a.idExperiencia - b.idExperiencia);
+    this.usuario.experiencias = array; 
+    this.usuarioJson = this.autenticationService.usuarioAutenticado
   }
 }

@@ -1,39 +1,40 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { AlertService } from 'ngx-alerts';
+import { Component, OnInit, Input } from '@angular/core'; 
+import { AlertService } from '@full-fledged/alerts';
 import { AbmService } from 'src/app/servicios/abm.service';
 import { PorfolioService } from 'src/app/servicios/porfolio.service'; 
 import Swal from 'sweetalert2';
-
+import { FormGroup, FormBuilder, Validators} from '@angular/forms'; 
+import { AutenticationService } from 'src/app/servicios/autentication.service';
+ 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css'],
 })
 export class PerfilComponent implements OnInit { 
-  @Input()usuario:any;
- 
+  @Input()usuario:any; 
+
   public loading = false;
-  miPorfolio: any;
-  usuarioJson: any;
-  form: UntypedFormGroup;
-  formPerfil: UntypedFormGroup;
+  usuarioJson:any 
+  form: FormGroup;
+  formPerfil: FormGroup;
   acercaDeList: any;
   id: number;
   t: string;
 
   constructor(
     private datosPorfolio: PorfolioService,
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private abmService: AbmService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private autenticationService: AutenticationService
   ) {
     this.form = this.formBuilder.group({
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
     });
     this.formPerfil = this.formBuilder.group({
-      nombres: ['', Validators.required],
+      nombres: ['', Validators.requiredTrue],
       apellido: ['', Validators.required],
       fecha_nacimiento: ['', Validators.required],
       nacionalidad: ['', Validators.required],
@@ -41,19 +42,14 @@ export class PerfilComponent implements OnInit {
       ocupacion: ['', Validators.required],
       image_background: ['', Validators.required],
       image_perfil: ['', Validators.required]
-    })
-    this.usuarioJson = JSON.parse(
-      sessionStorage.getItem('currentUser') || '{}'
-    );
+    }) 
     this.id = 0;
     this.t = '';
   }
-  showAlerts(): void{
-    this.alertService.info('this is an info alert');
-    this.alertService.danger('this is a danger alert');
-    this.alertService.success('this is a success alert');
-    this.alertService.warning('this is a warning alert');
-}  
+
+  alertDanger(message:any): void{
+    this.alertService.danger(message); 
+  }
 
   get titulo() {
     return this.form.get('titulo');
@@ -111,13 +107,10 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.datosPorfolio.obtenerDatos().subscribe((data) => {
-      const obj = JSON.parse(JSON.stringify(data));
-      this.miPorfolio = obj;
-      const array = obj.secciones;
-      array.sort((a: any, b: any) => a.idSeccion - b.idSeccion);
-      this.acercaDeList = array; 
-    });
+    const array = this.usuario.secciones;
+    array.sort((a: any, b: any) => a.idSeccion - b.idSeccion);
+    this.usuario.secciones = array; 
+    this.usuarioJson = this.autenticationService.usuarioAutenticado
   }
 
   onEditarPerfil(event: Event) {
@@ -135,8 +128,9 @@ export class PerfilComponent implements OnInit {
   }
 
   onNuevo(event: Event) {
-    event.preventDefault;
-    this.form.reset;
+    event.preventDefault; 
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
     const elemento = document.querySelector('.acercade_nuevo');
     elemento?.classList.add('modal--show');
   }
@@ -152,9 +146,7 @@ export class PerfilComponent implements OnInit {
           this.usuario = JSON.parse(JSON.stringify(data));
           const array = this.usuario.secciones;
           array.sort((a: any, b: any) => a.idSeccion - b.idSeccion);
-          this.usuario.secciones = array;
-          this.form.reset();
-          console.log(data2);
+          this.usuario.secciones = array;  
           this.onClose(event);
           this.loading = false;
           Swal.fire('OK', data2.mensaje, 'success')
@@ -199,21 +191,18 @@ export class PerfilComponent implements OnInit {
     event.preventDefault;
     this.loading = true;
     let credenciales = this.form.value;
-    let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
     this.abmService
-      .Modificacion(credenciales, 'seccion', this.id, usuarioJson.dni)
+      .Modificacion(credenciales, 'seccion', this.id, this.usuario.dni)
       .subscribe((data2) => {
         this.datosPorfolio.obtenerDatos().subscribe((data) => {
-          const obj = JSON.parse(JSON.stringify(data));
-          const array = obj.secciones;
+          this.usuario = JSON.parse(JSON.stringify(data));
+          const array = this.usuario.secciones;
           array.sort((a: any, b: any) => a.idSeccion - b.idSeccion);
-          this.acercaDeList = array;
+          this.usuario.secciones = array; 
+          this.onClose(event);
+          this.loading = false;
+          Swal.fire('OK', data2.mensaje, 'success')
         });
-        this.form.reset;
-        console.log(data2);
-        this.onClose(event);
-        this.loading = false;
-        Swal.fire('OK', 'Se actualizaron los datos de la sección.', 'success')
       }, (err)=>{ 
         this.loading = false;
         Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -221,20 +210,19 @@ export class PerfilComponent implements OnInit {
   }
 
   onDelete(event: Event) {
-    this.loading = true;
     event.preventDefault;
-    this.abmService.Baja('seccion', this.id).subscribe((data) => {
-      console.log(data);
+    this.loading = true;
+    this.abmService.Baja('seccion', this.id)
+    .subscribe((data2) => { 
       this.datosPorfolio.obtenerDatos().subscribe((data) => {
-        const obj = JSON.parse(JSON.stringify(data));
-        const array = obj.secciones;
+        this.usuario = JSON.parse(JSON.stringify(data));
+        const array = this.usuario.secciones;
         array.sort((a: any, b: any) => a.idSeccion - b.idSeccion);
-        this.acercaDeList = array;
+        this.usuario.secciones = array; 
+        this.onClose(event); 
+        this.loading = false;
+        Swal.fire('OK', data2.mensaje, 'success')
       });
-      this.form.reset;
-      this.onClose(event); 
-      this.loading = false;
-      Swal.fire('OK', 'Se eliminó la sección.', 'success')
     }, (err)=>{ 
       this.loading = false;
       Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')

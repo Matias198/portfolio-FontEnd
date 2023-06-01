@@ -37,7 +37,7 @@ import { AlertModule } from '@full-fledged/alerts';
     NgxLoadingModule.forRoot({}), 
     BrowserAnimationsModule,
     BrowserModule,
-    AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'})
+    AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right', positionY: 'bottom'})
   ],
   providers: [
     PorfolioService,

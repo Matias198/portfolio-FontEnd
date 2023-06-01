@@ -7,18 +7,19 @@
     [config]="{ fullScreenBackdrop: true }"
     [template]="customLoadingTemplate"
 ></ngx-loading>
+
 <!--#EXPERIENCIA:-->
 <div class="card mat-card">
     <div>
         <div class="card-titles">
             <h2>Experiencia</h2>
-            <div id="btn-add" *ngIf="usuarioJson.dni != '1'">
+            <div id="btn-add" *ngIf="usuarioJson?.dni != '1'">
                 <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onNuevoE($event)"><i
                         class="bi bi-plus-square-dotted"></i></a>
             </div>
         </div>
         <!---->
-        <div class="card-containers" *ngFor="let experience of experienceList">
+        <div class="card-containers" *ngFor="let experience of usuario.experiencias">
             <div class="cont cont-img">
                 <!--IMAGEN-->
                 <img class="img-exp" src="{{experience?.imagen}}">
@@ -30,7 +31,7 @@
                 <p class="p-anio">{{experience?.desde}} - {{experience?.hasta}} - {{experience?.duracion}}</p>
                 <p class="p-lugar">{{experience?.ciudad}} - {{experience?.provincia}}, {{experience?.pais}}</p>
             </div>
-            <div class="cont cont-buttons" *ngIf="usuarioJson.dni != '1'">
+            <div class="cont cont-buttons" *ngIf="usuarioJson?.dni != '1'">
                 <!--BOTONES-->
                 <div id="btn-edit"><a type="button" style="color: rgb(46, 152, 250)" class="btn-right"
                         (click)="onEditExp(experience)">
@@ -48,13 +49,13 @@
     <div>
         <div class="card-titles">
             <h2>Educacion</h2>
-            <div id="btn-add" *ngIf="usuarioJson.dni != '1'">
+            <div id="btn-add" *ngIf="usuarioJson?.dni != '1'">
                 <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onNuevoA($event)"><i
                         class="bi bi-plus-square-dotted"></i></a>
             </div>
         </div>
         <!---->
-        <div class="card-containers" *ngFor="let education of educationList">
+        <div class="card-containers" *ngFor="let education of usuario.academicos">
             <div class="cont cont-img">
                 <!--IMAGEN-->
                 <img class="img-exp" src="{{education.imagen}}">
@@ -65,7 +66,7 @@
                 <p class="p-title">{{education.titulo}}, {{education.carrera}}, {{education.puntaje}}</p>
                 <p class="p-subtitle">{{education.inicio}} - {{education.fin}}</p>
             </div>
-            <div class="cont cont-buttons" *ngIf="usuarioJson.dni != 1">
+            <div class="cont cont-buttons" *ngIf="usuarioJson?.dni != 1">
                 <!--BOTONES-->
                 <div id="btn-edit">
                     <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEditAca(education)">

@@ -14,7 +14,7 @@
     <div id="info" style="padding: 16px">
         <div>
             <img class="profile-image" src="{{usuario?.image_perfil}}">
-            <div id="btn-edit" *ngIf="usuario?.dni != '1'">
+            <div id="btn-edit" *ngIf="usuarioJson?.dni != '1'">
                 <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEditarPerfil($event)">
                     <i class="bi bi-pencil-square"></i></a>
             </div>
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div id="info-actions">
-            <button class="btn btn-primary" type="button" id="btn-edit" *ngIf="usuario?.dni != '1'"
+            <button class="btn btn-primary" type="button" id="btn-edit" *ngIf="usuarioJson?.dni != 1"
                 (click)="onNuevo($event)">Añadir Sección</button>
         </div>
     </div>
@@ -55,12 +55,13 @@
 
             <div class="row">
                 <div class="col">
-                    <!--NOMBRE-->
+                    <!--NOMBRE--> 
                     <div class="input-group mb-2">
                         <input type="text" formControlName="nombres" [ngClass]="{'is-invalid': nombres?.errors && nombres?.touched, 
                 'is-valid': !nombres?.errors && nombres?.touched}" class="form-control input_pass"
                             placeholder="nombres">
                     </div>
+                    
                     <div *ngIf="nombres?.errors && nombres?.touched">
                         <p *ngIf="nombres?.hasError('required')" class="text-danger">
                             Se requiere un nombre.
@@ -164,7 +165,7 @@
                 <button type="submit" class="modal_ingresar m-2" [disabled]="!formPerfil.valid">Modificar</button>
                 <button type="button" class="modal_close m-2" (click)="onClose($event)">Cerrar</button>
             </div>
-        </form>
+        </form> 
     </div>
 </div>
 
@@ -174,7 +175,7 @@
     <div class="card mat-card" *ngFor="let acercade of usuario.secciones">
         <div class="card-titles">
             <h2>{{acercade.titulo}}</h2>
-            <div class="cont cont-buttons" *ngIf="usuario?.dni != '1'">
+            <div class="cont cont-buttons" *ngIf="usuarioJson?.dni != 1">
                 <div id="btn-edit">
                     <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEdit(acercade)">
                         <i class="bi bi-pencil-square"></i>

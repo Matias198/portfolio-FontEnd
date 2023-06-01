@@ -38,7 +38,7 @@
                     <span class="visually-hidden">Button</span>
                 </a>
             </div>
-            <div *ngIf="usuario.dni != '1'; else esGuest">
+            <div *ngIf="usuarioJson?.dni != '1'; else esGuest">
                 <button type="button" class="btn btn-outline-success" (click)="onCerrarSesion($event)">Cerrar
                     Sesion</button>
             </div>

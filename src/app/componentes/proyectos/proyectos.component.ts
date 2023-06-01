@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core'; 
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbmService } from 'src/app/servicios/abm.service';
+import { AutenticationService } from 'src/app/servicios/autentication.service';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import Swal from 'sweetalert2';
 
@@ -13,26 +14,23 @@ export class ProyectosComponent implements OnInit {
 
   @Input()usuario:any;
 
-  public loading = false; 
-  proyectList: any;
-  usuarioJson: any;
-  form: UntypedFormGroup;
+  public loading = false;  
+  usuarioJson:any
+  form: FormGroup;
   t: String;
   id: number;
 
   constructor(
     private datosPorfolio: PorfolioService,
     private formBuilder: UntypedFormBuilder,
-    private abmService: AbmService
+    private abmService: AbmService,
+    private autenticationService: AutenticationService
   ) {
     this.form = this.formBuilder.group({
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
       link: ['', Validators.required]
-    });
-    this.usuarioJson = JSON.parse(
-      sessionStorage.getItem('currentUser') || '{}'
-    );
+    }); 
     this.t = '';
     this.id = 0;
   }
@@ -70,16 +68,14 @@ export class ProyectosComponent implements OnInit {
       .Modificacion(credenciales, 'proyecto', this.id, usuarioJson.dni)
       .subscribe((data2) => {
         this.datosPorfolio.obtenerDatos().subscribe((data) => {
-          const obj = JSON.parse(JSON.stringify(data));
-          const array = obj.proyectos;
+          this.usuario = JSON.parse(JSON.stringify(data));
+          const array = this.usuario.proyectos;
           array.sort((a: any, b: any) => a.idProyecto - b.idProyecto);
-          this.proyectList = array;
+          this.usuario.proyectos = array; 
+          this.onClose(event);
+          this.loading = false;
+          Swal.fire('OK', data2.mensaje, 'success')
         });
-        this.form.reset;
-        console.log(data2);
-        this.onClose(event);
-        this.loading = false;
-        Swal.fire('OK', 'Se actualizaron los datos del proyecto.', 'success')
       }, (err)=>{ 
         this.loading = false;
         Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -96,18 +92,17 @@ export class ProyectosComponent implements OnInit {
   onDelete(event: Event) {
     event.preventDefault;
     this.loading = true
-    this.abmService.Baja('proyecto', this.id).subscribe((data) => {
-      console.log(data);
+    this.abmService.Baja('proyecto', this.id)
+    .subscribe((data2) => { 
       this.datosPorfolio.obtenerDatos().subscribe((data) => {
-        const obj = JSON.parse(JSON.stringify(data));
-        const array = obj.proyectos;
+        this.usuario = JSON.parse(JSON.stringify(data));
+        const array = this.usuario.proyectos;
         array.sort((a: any, b: any) => a.idProyecto - b.idProyecto);
-        this.proyectList = array;
+        this.usuario.proyectos = array; 
+        this.onClose(event);
+        this.loading = false;
+        Swal.fire('OK', data2.mensaje, 'success')
       });
-      this.form.reset;
-      this.onClose(event);
-      this.loading = false;
-      Swal.fire('OK', 'Se eliminó el proyecto.', 'success')
     }, (err)=>{ 
       this.loading = false;
       Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -140,16 +135,14 @@ export class ProyectosComponent implements OnInit {
       .Alta(credenciales, 'proyecto', usuarioJson.dni)
       .subscribe((data2) => {
         this.datosPorfolio.obtenerDatos().subscribe((data) => {
-          const obj = JSON.parse(JSON.stringify(data));
-          const array = obj.proyectos;
+          this.usuario = JSON.parse(JSON.stringify(data));
+          const array = this.usuario.proyectos;
           array.sort((a: any, b: any) => a.idProyecto - b.idProyecto);
-          this.proyectList = array;
-        });
-        this.form.reset;
-        console.log(data2);
-        this.onClose(event);
-        this.loading = false;
-        Swal.fire('OK', 'Se creó un nuevo proyecto.', 'success')
+          this.usuario.proyectos = array;
+          this.onClose(event);
+          this.loading = false;
+          Swal.fire('OK', data2.mensaje, 'success')
+        }); 
       }, (err)=>{ 
         this.loading = false;
         Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -157,11 +150,9 @@ export class ProyectosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.datosPorfolio.obtenerDatos().subscribe((data) => {
-      const obj = JSON.parse(JSON.stringify(data));
-      const array = obj.proyectos;
-      array.sort((a: any, b: any) => a.idProyecto - b.idProyecto);
-      this.proyectList = array; 
-    });
+    const array = this.usuario.proyectos;
+    array.sort((a: any, b: any) => a.idProyecto - b.idProyecto);
+    this.usuario.proyectos = array; 
+    this.usuarioJson = this.autenticationService.usuarioAutenticado
   }
 }

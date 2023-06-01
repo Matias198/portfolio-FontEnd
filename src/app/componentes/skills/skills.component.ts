@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core'; 
+import { UntypedFormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AbmService } from 'src/app/servicios/abm.service';
+import { AutenticationService } from 'src/app/servicios/autentication.service';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import Swal from 'sweetalert2';
 
@@ -13,24 +14,21 @@ export class SkillsComponent implements OnInit {
   @Input()usuario:any;
   
   public loading = false; 
-  skillsList: any;
-  usuarioJson: any;
+  usuarioJson:any
   skill: String;
-  form: UntypedFormGroup;
+  form: FormGroup;
   id: number;
 
   constructor(
     private datosPorfolio: PorfolioService,
     private formBuilder: UntypedFormBuilder,
-    private abmService: AbmService
+    private abmService: AbmService,
+    private autenticationService: AutenticationService
   ) {
     this.form = this.formBuilder.group({
       progreso: [0, Validators.required],
       titulo: ['', Validators.required],
     });
-    this.usuarioJson = JSON.parse(
-      sessionStorage.getItem('currentUser') || '{}'
-    );
     this.skill = '';
     this.id = 0;
   }
@@ -58,22 +56,19 @@ export class SkillsComponent implements OnInit {
   onEnviar(event: Event) {
     event.preventDefault;
     this.loading = true;
-    let credenciales = this.form.value;
-    let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+    let credenciales = this.form.value; 
     this.abmService
-      .Modificacion(credenciales, 'skill', this.id, usuarioJson.dni)
+      .Modificacion(credenciales, 'skill', this.id, this.usuario.dni)
       .subscribe((data2) => {
         this.datosPorfolio.obtenerDatos().subscribe((data) => {
-          const obj = JSON.parse(JSON.stringify(data));
-          const array = obj.skills;
+          this.usuario = JSON.parse(JSON.stringify(data));
+          const array = this.usuario.skills;
           array.sort((a: any, b: any) => a.idSkill - b.idSkill);
-          this.skillsList = array;
-        });
-        this.form.reset;
-        console.log(data2);
-        this.onClose(event);
-        this.loading = false;
-        Swal.fire('OK', 'Se actualizaron los datos de la habilidad.', 'success')
+          this.usuario.skills = array;
+          this.onClose(event);
+          this.loading = false;
+          Swal.fire('OK', data2.mensaje, 'success')
+        }); 
       }, (err)=>{ 
         this.loading = false;
         Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -90,18 +85,17 @@ export class SkillsComponent implements OnInit {
   onDelete(event: Event) {
     event.preventDefault;
     this.loading = true
-    this.abmService.Baja('skill', this.id).subscribe((data) => {
-      console.log(data);
+    this.abmService.Baja('skill', this.id)
+    .subscribe((data2) => { 
       this.datosPorfolio.obtenerDatos().subscribe((data) => {
-        const obj = JSON.parse(JSON.stringify(data));
-        const array = obj.skills;
+        this.usuario = JSON.parse(JSON.stringify(data));
+        const array = this.usuario.skills;
         array.sort((a: any, b: any) => a.idSkill - b.idSkill);
-        this.skillsList = array;
+        this.usuario.skills = array; 
+        this.onClose(event);
+        this.loading = false;
+        Swal.fire('OK', data2.mensaje, 'success')
       });
-      this.form.reset;
-      this.onClose(event);
-      this.loading = false;
-      Swal.fire('OK', 'Se eliminó la habilidad.', 'success')
     }, (err)=>{ 
       this.loading = false;
       Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -127,22 +121,19 @@ export class SkillsComponent implements OnInit {
   onNueva(event: Event) {
     event.preventDefault;
     this.loading = true
-    let credenciales = this.form.value;
-    let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+    let credenciales = this.form.value; 
     this.abmService
-      .Alta(credenciales, 'skill', usuarioJson.dni)
+      .Alta(credenciales, 'skill', this.usuario.dni)
       .subscribe((data2) => {
         this.datosPorfolio.obtenerDatos().subscribe((data) => {
-          const obj = JSON.parse(JSON.stringify(data));
-          const array = obj.skills;
+          this.usuario = JSON.parse(JSON.stringify(data));
+          const array = this.usuario.skills;
           array.sort((a: any, b: any) => a.idSkill - b.idSkill);
-          this.skillsList = array;
+          this.usuario.skills = array; 
+          this.onClose(event);
+          this.loading = false;
+          Swal.fire('OK', data2.mensaje, 'success')
         });
-        this.form.reset;
-        console.log(data2);
-        this.onClose(event);
-        this.loading = false;
-        Swal.fire('OK', 'Se creao una nueva habilidad.', 'success')
       }, (err)=>{ 
         this.loading = false;
         Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
@@ -150,11 +141,9 @@ export class SkillsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.datosPorfolio.obtenerDatos().subscribe((data) => {
-      const obj = JSON.parse(JSON.stringify(data));
-      const array = obj.skills;
-      array.sort((a: any, b: any) => a.idSkill - b.idSkill);
-      this.skillsList = array;  
-    });
+    const array = this.usuario.skills;
+    array.sort((a: any, b: any) => a.idSkill - b.idSkill);
+    this.usuario.skills = array; 
+    this.usuarioJson = this.autenticationService.usuarioAutenticado
   }
 }

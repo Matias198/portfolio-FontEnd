@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutenticationService } from 'src/app/servicios/autentication.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -12,10 +12,10 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 export class IniciarSesionComponent implements OnInit {
   public loading = false;
 
-  form: UntypedFormGroup;
-  formGuest: UntypedFormGroup;
+  form: FormGroup;
+  formGuest: FormGroup;
   constructor(
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private autenticationService: AutenticationService,
     private ruta: Router
   ) {
