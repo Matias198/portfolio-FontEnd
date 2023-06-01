@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbmService } from 'src/app/servicios/abm.service';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-experiencia',
@@ -9,9 +10,14 @@ import { PorfolioService } from 'src/app/servicios/porfolio.service';
   styleUrls: ['./experiencia.component.css'],
 })
 export class ExperienciaComponent implements OnInit {
+
+  @Input()usuario:any;
+
+  public loading = false;
   educationList: any;
   experienceList: any;
   usuarioJson: any;
+
   formExp: FormGroup;
   formAca: FormGroup;
   id: number;
@@ -46,10 +52,7 @@ export class ExperienciaComponent implements OnInit {
       puntaje: ['', Validators.required],
       imagen: ['', Validators.required],
     });
-
-    this.usuarioJson = JSON.parse(
-      sessionStorage.getItem('currentUser') || '{}'
-    );
+    
     this.id = 0;
     this.t = '';
     this.ida = 0;
@@ -149,12 +152,12 @@ export class ExperienciaComponent implements OnInit {
 
   onEnviarExp(event: Event) {
     event.preventDefault;
-    let credenciales = this.formExp.value;
-    let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
-
+    this.loading = true;
+    let credenciales = this.formExp.value; 
     this.abmService
-      .Modificacion(credenciales, 'experiencia', this.id, usuarioJson.dni)
+      .Modificacion(credenciales, 'experiencia', this.id, this.usuario.dni)
       .subscribe((data2) => {
+        console.log(this.usuario)
         this.datosPorfolio.obtenerDatos().subscribe((data) => {
           const obj = JSON.parse(JSON.stringify(data));
           const array = obj.experiencias;
@@ -164,6 +167,11 @@ export class ExperienciaComponent implements OnInit {
         this.formExp.reset;
         console.log(data2);
         this.onClose(event);
+        this.loading = false;
+        Swal.fire('OK', 'Se actualizaron los datos de la experiencia.', 'success')
+      }, (err)=>{ 
+        this.loading = false;
+        Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
       });
   }
 
@@ -176,6 +184,7 @@ export class ExperienciaComponent implements OnInit {
 
   onDeleteExp(event: Event) {
     event.preventDefault;
+    this.loading = true;
     this.abmService.Baja('experiencia', this.id).subscribe((data) => {
       console.log(data);
       this.datosPorfolio.obtenerDatos().subscribe((data) => {
@@ -186,6 +195,11 @@ export class ExperienciaComponent implements OnInit {
       });
       this.formExp.reset;
       this.onClose(event);
+      this.loading = false;
+      Swal.fire('OK', 'Se eliminó la experiencia.', 'success')
+    }, (err)=>{ 
+      this.loading = false;
+      Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
     });
   }
 
@@ -198,9 +212,9 @@ export class ExperienciaComponent implements OnInit {
 
   onNuevaExp(event: Event) {
     event.preventDefault;
+    this.loading = true
     let credenciales = this.formExp.value;
     let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
-
     this.abmService
       .Alta(credenciales, 'experiencia', usuarioJson.dni)
       .subscribe((data2) => {
@@ -213,6 +227,11 @@ export class ExperienciaComponent implements OnInit {
         this.formExp.reset;
         console.log(data2);
         this.onClose(event);
+        this.loading = false;
+        Swal.fire('OK', 'Se agregó una nueva experiencia.', 'success')
+      }, (err)=>{ 
+        this.loading = false;
+        Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
       });
   }
 
@@ -232,6 +251,7 @@ export class ExperienciaComponent implements OnInit {
 
   onEnviarAca(event: Event) {
     event.preventDefault;
+    this.loading = true;
     let credenciales = this.formAca.value;
     let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
     this.abmService
@@ -246,6 +266,11 @@ export class ExperienciaComponent implements OnInit {
         this.formAca.reset;
         console.log(data2);
         this.onClose(event);
+        this.loading = false;
+        Swal.fire('OK', 'Se actualizaron los datos academicos.', 'success')
+      }, (err)=>{ 
+        this.loading = false;
+        Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
       });
   }
 
@@ -258,6 +283,7 @@ export class ExperienciaComponent implements OnInit {
 
   onDeleteAca(event: Event) {
     event.preventDefault;
+    this.loading = true;
     this.abmService.Baja('academico', this.ida).subscribe((data) => {
       console.log(data);
       this.datosPorfolio.obtenerDatos().subscribe((data) => {
@@ -268,6 +294,11 @@ export class ExperienciaComponent implements OnInit {
       });
       this.formAca.reset;
       this.onClose(event);
+      this.loading = false;
+      Swal.fire('OK', 'Se eliminó el academico.', 'success')
+    }, (err)=>{ 
+      this.loading = false;
+      Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
     });
   }
 
@@ -280,6 +311,7 @@ export class ExperienciaComponent implements OnInit {
 
   onNuevaAca(event: Event) {
     event.preventDefault;
+    this.loading = true
     let credenciales = this.formAca.value;
     let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
     this.abmService
@@ -294,18 +326,21 @@ export class ExperienciaComponent implements OnInit {
         this.formAca.reset;
         console.log(data2);
         this.onClose(event);
+        this.loading = false;
+        Swal.fire('OK', 'Se agregó un nuevo academico.', 'success')
+      }, (err)=>{ 
+        this.loading = false;
+        Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
       });
   }
 
   ngOnInit(): void {
     this.datosPorfolio.obtenerDatos().subscribe((data) => {
       const obj = JSON.parse(JSON.stringify(data));
-      this.educationList = obj.academicos;
-
+      this.educationList = obj.academicos; 
       const array2 = obj.academicos;
       array2.sort((a: any, b: any) => a.idAcademico - b.idAcademico);
-      this.educationList = array2;
-
+      this.educationList = array2; 
       const array = obj.experiencias;
       array.sort((a: any, b: any) => a.idExperiencia - b.idExperiencia);
       this.experienceList = array;

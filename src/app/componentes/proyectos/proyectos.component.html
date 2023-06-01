@@ -1,3 +1,13 @@
+<ng-template #customLoadingTemplate>
+    <div class="custom-class"> 
+    </div>
+</ng-template>
+<ngx-loading 
+    [show]="loading"
+    [config]="{ fullScreenBackdrop: true }"
+    [template]="customLoadingTemplate"
+></ngx-loading>
+
 <!--#PROYECTOS:-->
 <div class="card mat-card">
     <div class="card-titles">
@@ -11,8 +21,8 @@
     <div class="container" style="margin-bottom: 2%;" *ngFor="let proyecto of proyectList">
         <div class="row">
             <div class="col-11 item-center">
-                <a class="p-title-proyect" href="{{proyecto.link}}" target="_blank">{{proyecto.titulo}}</a>
-                <p class="p-body-proyect">{{proyecto.descripcion}}</p>
+                <a class="p-title-proyect" href="{{proyecto?.link}}" target="_blank">{{proyecto?.titulo}}</a>
+                <p class="p-body-proyect">{{proyecto?.descripcion}}</p>
             </div>
             <div class="col-1 btn-edit-ajust" *ngIf="usuarioJson.dni != '1'">
                 <div class="cont cont-buttons">

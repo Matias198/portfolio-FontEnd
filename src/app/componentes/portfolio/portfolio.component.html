@@ -1,14 +1,17 @@
-<div *ngIf="valor">
-    <app-encabezado></app-encabezado>
-    <app-perfil></app-perfil>
-    <app-experiencia></app-experiencia>
-    <app-skills></app-skills>
-    <app-proyectos></app-proyectos>
-</div>
-<div *ngIf="!valor">
-    <div class="justify-content-center align-content-center" style="height: 100vh; width: 100%;">
-        <div class="spinner-border" role="status">
-            <span class="sr-only">Cargando...</span>
-        </div>
+<ng-template #customLoadingTemplate>
+    <div class="custom-class"> 
     </div>
+</ng-template>
+<ngx-loading 
+    [show]="loading"
+    [config]="{ fullScreenBackdrop: true }"
+    [template]="customLoadingTemplate"
+></ngx-loading>
+
+<div *ngIf="!loading" id="main-div" [hidden]="loading">
+    <app-encabezado [usuario]="usuario"></app-encabezado>
+    <app-perfil [usuario]="usuario"></app-perfil>
+    <!--<app-experiencia [usuario]="usuario"></app-experiencia>
+    <app-skills [usuario]="usuario"></app-skills>
+    <app-proyectos [usuario]="usuario"></app-proyectos>-->
 </div>

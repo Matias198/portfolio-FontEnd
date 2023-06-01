@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutenticationService } from 'src/app/servicios/autentication.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -9,6 +10,8 @@ import { AutenticationService } from 'src/app/servicios/autentication.service';
   styleUrls: ['./iniciar-sesion.component.css'],
 })
 export class IniciarSesionComponent implements OnInit {
+  public loading = false;
+
   form: FormGroup;
   formGuest: FormGroup;
   constructor(
@@ -40,11 +43,16 @@ export class IniciarSesionComponent implements OnInit {
 
   onEnviar(event: Event) {
     event.preventDefault;
+    this.loading = true;
     this.autenticationService
       .IniciarSesion(this.form.value)
       .subscribe((data) => {
         console.log(data);
+        this.loading = false;
         this.ruta.navigate(['portfolio']);
+      }, (err)=>{ 
+        this.loading = false;
+        Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
       });
   }
 

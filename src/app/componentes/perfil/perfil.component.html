@@ -1,39 +1,49 @@
+<ng-template #customLoadingTemplate>
+    <div class="custom-class"> 
+    </div>
+</ng-template>
+<ngx-loading 
+    [show]="loading"
+    [config]="{ fullScreenBackdrop: true }"
+    [template]="customLoadingTemplate"
+></ngx-loading>
+
 <!--#DATOS DEL PERFIL:-->
 <div class="card mat-card" id="first-card">
-    <div id="profile-background"><img src="{{miPorfolio.image_background}}" style="min-height: 250px ;max-height: 250px;"></div>
+    <div id="profile-background"><img src="{{usuario?.image_background}}" style="min-height: 250px ;max-height: 250px;"></div>
     <div id="info" style="padding: 16px">
         <div>
-            <img class="profile-image" src="{{miPorfolio.image_perfil}}">
-            <div id="btn-edit" *ngIf="usuarioJson.dni != '1'">
+            <img class="profile-image" src="{{usuario?.image_perfil}}">
+            <div id="btn-edit" *ngIf="usuario?.dni != '1'">
                 <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEditarPerfil($event)">
                     <i class="bi bi-pencil-square"></i></a>
             </div>
         </div>
         <div id="info-data">
             <div class="mt-3" id="div-data">
-                <h1 id="nombreUsuario">{{miPorfolio.nombres}} {{miPorfolio.apellido}}</h1>
-                <div id="info-persona">{{miPorfolio.ocupacion}}</div>
+                <h1 id="nombreUsuario">{{usuario?.nombres}} {{usuario?.apellido}}</h1>
+                <div id="info-persona">{{usuario?.ocupacion}}</div>
                 <div>
-                    <span id="info-lugar">{{miPorfolio.nacionalidad}} </span>
-                    <span>. Contacto: <a href="mailto:{{miPorfolio.mail}}" style="color: rgb(46, 152, 250)"
-                            id="info-contacto">{{miPorfolio.mail}}</a></span>
+                    <span id="info-lugar">{{usuario?.nacionalidad}} </span>
+                    <span>. Contacto: <a href="mailto:{{usuario?.mail}}" style="color: rgb(46, 152, 250)"
+                            id="info-contacto">{{usuario?.mail}}</a></span>
                 </div>
             </div>
             <div id="info-academyc" class="d-none d-lg-block">
                 <ul id="info-details">
-                    <li><a href="{{miPorfolio.compania.url}}" target="_blank">
-                            <img class="img-li" src="{{miPorfolio.compania.imagen}}">
-                            <h2>{{miPorfolio.compania.nombre}}</h2>
+                    <li><a href="{{usuario?.compania.url}}" target="_blank">
+                            <img class="img-li" src="{{usuario?.compania.imagen}}">
+                            <h2>{{usuario?.compania.nombre}}</h2>
                         </a></li>
-                    <li><a href="{{miPorfolio.escuela.url}}" target="_blank">
-                            <img class="img-li" src="{{miPorfolio.escuela.imagen}}">
-                            <h2>{{miPorfolio.escuela.nombre}}</h2>
+                    <li><a href="{{usuario?.escuela.url}}" target="_blank">
+                            <img class="img-li" src="{{usuario?.escuela.imagen}}">
+                            <h2>{{usuario?.escuela.nombre}}</h2>
                         </a></li>
                 </ul>
             </div>
         </div>
         <div id="info-actions">
-            <button class="btn btn-primary" type="button" id="btn-edit" *ngIf="usuarioJson.dni != '1'"
+            <button class="btn btn-primary" type="button" id="btn-edit" *ngIf="usuario?.dni != '1'"
                 (click)="onNuevo($event)">Añadir Sección</button>
         </div>
     </div>
@@ -161,10 +171,10 @@
 
 <!--#ACERCA DE:-->
 <div>
-    <div class="card mat-card" *ngFor="let acercade of acercaDeList">
+    <div class="card mat-card" *ngFor="let acercade of usuario.secciones">
         <div class="card-titles">
             <h2>{{acercade.titulo}}</h2>
-            <div class="cont cont-buttons" *ngIf="usuarioJson.dni != '1'">
+            <div class="cont cont-buttons" *ngIf="usuario?.dni != '1'">
                 <div id="btn-edit">
                     <a type="button" style="color: rgb(46, 152, 250)" class="btn-right" (click)="onEdit(acercade)">
                         <i class="bi bi-pencil-square"></i>
@@ -267,3 +277,4 @@
         </form>
     </div>
 </div>
+<ff-alerts></ff-alerts>

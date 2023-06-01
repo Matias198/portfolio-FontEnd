@@ -1,3 +1,13 @@
+<ng-template #customLoadingTemplate>
+    <div class="custom-class"> 
+    </div>
+</ng-template>
+<ngx-loading 
+    [show]="loading"
+    [config]="{ fullScreenBackdrop: true }"
+    [template]="customLoadingTemplate"
+></ngx-loading>
+
 <!--#HARD SKILLS SOFT SKILLS:-->
 <div class="card mat-card">
     <div class="card-titles">
@@ -11,10 +21,10 @@
     <div class="container" style="margin-bottom: 2%;" *ngFor="let skill of skillsList">
         <div class="row">
             <div class="col-11 item-center">
-                <h2 class="p-title-center">{{skill.titulo}}</h2>
+                <h2 class="p-title-center">{{skill?.titulo}}</h2>
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"
-                        style="width: {{skill.progreso}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        style="width: {{skill?.progreso}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                     </div>
                 </div>
             </div>

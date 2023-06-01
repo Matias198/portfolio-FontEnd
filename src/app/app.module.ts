@@ -14,6 +14,9 @@ import { PortfolioComponent } from './componentes/portfolio/portfolio.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { PorfolioService } from './servicios/porfolio.service';
 import { InterceptorService } from './servicios/interceptor.service';
+import { NgxLoadingModule } from 'ngx-loading';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { AlertModule } from '@full-fledged/alerts';
 
 @NgModule({
   declarations: [
@@ -30,10 +33,15 @@ import { InterceptorService } from './servicios/interceptor.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxLoadingModule.forRoot({}), 
+    BrowserAnimationsModule,
+    BrowserModule,
+    AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'})
   ],
-  providers: [PorfolioService,
-    {provide: HTTP_INTERCEPTORS, useClass:InterceptorService, multi: true}
+  providers: [
+    PorfolioService,
+    {provide: HTTP_INTERCEPTORS, useClass:InterceptorService, multi: true},
   ],
 
   bootstrap: [AppComponent]

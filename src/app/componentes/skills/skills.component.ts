@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbmService } from 'src/app/servicios/abm.service';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-skills',
@@ -9,6 +10,9 @@ import { PorfolioService } from 'src/app/servicios/porfolio.service';
   styleUrls: ['./skills.component.css'],
 })
 export class SkillsComponent implements OnInit {
+  @Input()usuario:any;
+  
+  public loading = false; 
   skillsList: any;
   usuarioJson: any;
   skill: String;
@@ -53,9 +57,9 @@ export class SkillsComponent implements OnInit {
 
   onEnviar(event: Event) {
     event.preventDefault;
+    this.loading = true;
     let credenciales = this.form.value;
     let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
-
     this.abmService
       .Modificacion(credenciales, 'skill', this.id, usuarioJson.dni)
       .subscribe((data2) => {
@@ -68,6 +72,11 @@ export class SkillsComponent implements OnInit {
         this.form.reset;
         console.log(data2);
         this.onClose(event);
+        this.loading = false;
+        Swal.fire('OK', 'Se actualizaron los datos de la habilidad.', 'success')
+      }, (err)=>{ 
+        this.loading = false;
+        Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
       });
   }
 
@@ -80,6 +89,7 @@ export class SkillsComponent implements OnInit {
 
   onDelete(event: Event) {
     event.preventDefault;
+    this.loading = true
     this.abmService.Baja('skill', this.id).subscribe((data) => {
       console.log(data);
       this.datosPorfolio.obtenerDatos().subscribe((data) => {
@@ -90,6 +100,11 @@ export class SkillsComponent implements OnInit {
       });
       this.form.reset;
       this.onClose(event);
+      this.loading = false;
+      Swal.fire('OK', 'Se eliminó la habilidad.', 'success')
+    }, (err)=>{ 
+      this.loading = false;
+      Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
     });
   }
 
@@ -111,6 +126,7 @@ export class SkillsComponent implements OnInit {
 
   onNueva(event: Event) {
     event.preventDefault;
+    this.loading = true
     let credenciales = this.form.value;
     let usuarioJson = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
     this.abmService
@@ -125,6 +141,11 @@ export class SkillsComponent implements OnInit {
         this.form.reset;
         console.log(data2);
         this.onClose(event);
+        this.loading = false;
+        Swal.fire('OK', 'Se creao una nueva habilidad.', 'success')
+      }, (err)=>{ 
+        this.loading = false;
+        Swal.fire('Error', 'Vuelva a intentarlo corroborando sus datos. Mensaje del servidor: ' + err.error.mensaje, 'error')
       });
   }
 
@@ -133,7 +154,7 @@ export class SkillsComponent implements OnInit {
       const obj = JSON.parse(JSON.stringify(data));
       const array = obj.skills;
       array.sort((a: any, b: any) => a.idSkill - b.idSkill);
-      this.skillsList = array;
+      this.skillsList = array;  
     });
   }
 }

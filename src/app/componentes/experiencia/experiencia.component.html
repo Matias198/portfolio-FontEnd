@@ -1,3 +1,12 @@
+<ng-template #customLoadingTemplate>
+    <div class="custom-class"> 
+    </div>
+</ng-template>
+<ngx-loading 
+    [show]="loading"
+    [config]="{ fullScreenBackdrop: true }"
+    [template]="customLoadingTemplate"
+></ngx-loading>
 <!--#EXPERIENCIA:-->
 <div class="card mat-card">
     <div>
@@ -12,14 +21,14 @@
         <div class="card-containers" *ngFor="let experience of experienceList">
             <div class="cont cont-img">
                 <!--IMAGEN-->
-                <img class="img-exp" src="{{experience.imagen}}">
+                <img class="img-exp" src="{{experience?.imagen}}">
             </div>
             <div class="cont cont-text">
                 <!--TEXTO-->
-                <h2 class="h2-title">{{experience.titulo}}</h2>
-                <p class="p-title">{{experience.establecimiento}} - {{experience.lugar}}</p>
-                <p class="p-anio">{{experience.desde}} - {{experience.hasta}} - {{experience.duracion}}</p>
-                <p class="p-lugar">{{experience.ciudad}} - {{experience.provincia}}, {{experience.pais}}</p>
+                <h2 class="h2-title">{{experience?.titulo}}</h2>
+                <p class="p-title">{{experience?.establecimiento}} - {{experience?.lugar}}</p>
+                <p class="p-anio">{{experience?.desde}} - {{experience?.hasta}} - {{experience?.duracion}}</p>
+                <p class="p-lugar">{{experience?.ciudad}} - {{experience?.provincia}}, {{experience?.pais}}</p>
             </div>
             <div class="cont cont-buttons" *ngIf="usuarioJson.dni != '1'">
                 <!--BOTONES-->

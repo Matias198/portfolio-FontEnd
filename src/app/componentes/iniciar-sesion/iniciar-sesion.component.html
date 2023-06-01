@@ -1,4 +1,14 @@
-<div class="super_contenedor_main">
+<ng-template #customLoadingTemplate>
+    <div class="custom-class"> 
+    </div>
+</ng-template>
+<ngx-loading 
+    [show]="loading"
+    [config]="{ fullScreenBackdrop: true }"
+    [template]="customLoadingTemplate"
+></ngx-loading>
+
+<div class="super_contenedor_main" style="height: 100vh;">
 	<div class=" container h-100">
 		<div class="d-flex justify-content-center h-100">
 			<div class="contenedor_main">
