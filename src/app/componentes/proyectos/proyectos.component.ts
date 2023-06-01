@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AbmService } from 'src/app/servicios/abm.service';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import Swal from 'sweetalert2';
@@ -16,13 +16,13 @@ export class ProyectosComponent implements OnInit {
   public loading = false; 
   proyectList: any;
   usuarioJson: any;
-  form: FormGroup;
+  form: UntypedFormGroup;
   t: String;
   id: number;
 
   constructor(
     private datosPorfolio: PorfolioService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private abmService: AbmService
   ) {
     this.form = this.formBuilder.group({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { AutenticationService } from './servicios/autentication.service';
 
 @Component({
@@ -10,9 +10,9 @@ import { AutenticationService } from './servicios/autentication.service';
 export class AppComponent implements OnInit{
   title = 'PorfolioDinamicoAngular';
 
-  formGuest: FormGroup;
+  formGuest: UntypedFormGroup;
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private autenticationService: AutenticationService
   ) {
     this.formGuest = this.formBuilder.group({

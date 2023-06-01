@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'ngx-alerts';
 import { AbmService } from 'src/app/servicios/abm.service';
 import { PorfolioService } from 'src/app/servicios/porfolio.service'; 
@@ -16,15 +16,15 @@ export class PerfilComponent implements OnInit {
   public loading = false;
   miPorfolio: any;
   usuarioJson: any;
-  form: FormGroup;
-  formPerfil: FormGroup;
+  form: UntypedFormGroup;
+  formPerfil: UntypedFormGroup;
   acercaDeList: any;
   id: number;
   t: string;
 
   constructor(
     private datosPorfolio: PorfolioService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private abmService: AbmService,
     private alertService: AlertService
   ) {

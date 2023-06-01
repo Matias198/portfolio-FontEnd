@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AbmService } from 'src/app/servicios/abm.service';
 import { PorfolioService } from 'src/app/servicios/porfolio.service';
 import Swal from 'sweetalert2';
@@ -18,8 +18,8 @@ export class ExperienciaComponent implements OnInit {
   experienceList: any;
   usuarioJson: any;
 
-  formExp: FormGroup;
-  formAca: FormGroup;
+  formExp: UntypedFormGroup;
+  formAca: UntypedFormGroup;
   id: number;
   ida: number;
   t: string;
@@ -27,7 +27,7 @@ export class ExperienciaComponent implements OnInit {
 
   constructor(
     private datosPorfolio: PorfolioService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private abmService: AbmService
   ) {
     this.formExp = this.formBuilder.group({
